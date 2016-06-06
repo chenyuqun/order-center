@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zizaike.dao.trade.TradeServiceOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.zizaike.entity.trade.TradeServiceOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="master_order_no" property="masterOrderNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
+    <result column="unit_type" property="unitType" jdbcType="VARCHAR" />
+    <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="INTEGER" />
+    <result column="unit_number" property="unitNumber" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="INTEGER" />
+    <result column="use_time" property="useTime" jdbcType="TIMESTAMP" />
+    <result column="RMB_rate_business" property="rmbRateBusiness" jdbcType="DOUBLE" />
+    <result column="RMB_rate_customer" property="rmbRateCustomer" jdbcType="DOUBLE" />
+    <result column="commission_rate" property="commissionRate" jdbcType="INTEGER" />
+    <result column="commission_amount" property="commissionAmount" jdbcType="INTEGER" />
+    <result column="discount_amount" property="discountAmount" jdbcType="INTEGER" />
+    <result column="refund_amount" property="refundAmount" jdbcType="INTEGER" />
+    <result column="closed_reasons" property="closedReasons" jdbcType="INTEGER" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="order_remarks" property="orderRemarks" jdbcType="VARCHAR" />
+    <result column="daochu_status" property="daochuStatus" jdbcType="BIT" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, master_order_no, order_no, unit_id, unit_type, unit_name, unit_price, unit_number, 
+    total_price, use_time, RMB_rate_business, RMB_rate_customer, commission_rate, commission_amount, 
+    discount_amount, refund_amount, closed_reasons, order_type, order_status, order_remarks, 
+    daochu_status, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_trade_service_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_trade_service_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    insert into t_trade_service_order (id, master_order_no, order_no, 
+      unit_id, unit_type, unit_name, 
+      unit_price, unit_number, total_price, 
+      use_time, RMB_rate_business, RMB_rate_customer, 
+      commission_rate, commission_amount, discount_amount, 
+      refund_amount, closed_reasons, order_type, 
+      order_status, order_remarks, daochu_status, 
+      create_at, update_at)
+    values (#{id,jdbcType=INTEGER}, #{masterOrderNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{unitId,jdbcType=VARCHAR}, #{unitType,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, 
+      #{unitPrice,jdbcType=INTEGER}, #{unitNumber,jdbcType=INTEGER}, #{totalPrice,jdbcType=INTEGER}, 
+      #{useTime,jdbcType=TIMESTAMP}, #{rmbRateBusiness,jdbcType=DOUBLE}, #{rmbRateCustomer,jdbcType=DOUBLE}, 
+      #{commissionRate,jdbcType=INTEGER}, #{commissionAmount,jdbcType=INTEGER}, #{discountAmount,jdbcType=INTEGER}, 
+      #{refundAmount,jdbcType=INTEGER}, #{closedReasons,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER}, 
+      #{orderStatus,jdbcType=INTEGER}, #{orderRemarks,jdbcType=VARCHAR}, #{daochuStatus,jdbcType=BIT}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    insert into t_trade_service_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="masterOrderNo != null" >
+        master_order_no,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="unitId != null" >
+        unit_id,
+      </if>
+      <if test="unitType != null" >
+        unit_type,
+      </if>
+      <if test="unitName != null" >
+        unit_name,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+      <if test="unitNumber != null" >
+        unit_number,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="useTime != null" >
+        use_time,
+      </if>
+      <if test="rmbRateBusiness != null" >
+        RMB_rate_business,
+      </if>
+      <if test="rmbRateCustomer != null" >
+        RMB_rate_customer,
+      </if>
+      <if test="commissionRate != null" >
+        commission_rate,
+      </if>
+      <if test="commissionAmount != null" >
+        commission_amount,
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount,
+      </if>
+      <if test="refundAmount != null" >
+        refund_amount,
+      </if>
+      <if test="closedReasons != null" >
+        closed_reasons,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="orderRemarks != null" >
+        order_remarks,
+      </if>
+      <if test="daochuStatus != null" >
+        daochu_status,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="updateAt != null" >
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="masterOrderNo != null" >
+        #{masterOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="unitNumber != null" >
+        #{unitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null" >
+        #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rmbRateBusiness != null" >
+        #{rmbRateBusiness,jdbcType=DOUBLE},
+      </if>
+      <if test="rmbRateCustomer != null" >
+        #{rmbRateCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="commissionRate != null" >
+        #{commissionRate,jdbcType=INTEGER},
+      </if>
+      <if test="commissionAmount != null" >
+        #{commissionAmount,jdbcType=INTEGER},
+      </if>
+      <if test="discountAmount != null" >
+        #{discountAmount,jdbcType=INTEGER},
+      </if>
+      <if test="refundAmount != null" >
+        #{refundAmount,jdbcType=INTEGER},
+      </if>
+      <if test="closedReasons != null" >
+        #{closedReasons,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orderRemarks != null" >
+        #{orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="daochuStatus != null" >
+        #{daochuStatus,jdbcType=BIT},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    update t_trade_service_order
+    <set >
+      <if test="masterOrderNo != null" >
+        master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        unit_type = #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="unitNumber != null" >
+        unit_number = #{unitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null" >
+        use_time = #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rmbRateBusiness != null" >
+        RMB_rate_business = #{rmbRateBusiness,jdbcType=DOUBLE},
+      </if>
+      <if test="rmbRateCustomer != null" >
+        RMB_rate_customer = #{rmbRateCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="commissionRate != null" >
+        commission_rate = #{commissionRate,jdbcType=INTEGER},
+      </if>
+      <if test="commissionAmount != null" >
+        commission_amount = #{commissionAmount,jdbcType=INTEGER},
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount = #{discountAmount,jdbcType=INTEGER},
+      </if>
+      <if test="refundAmount != null" >
+        refund_amount = #{refundAmount,jdbcType=INTEGER},
+      </if>
+      <if test="closedReasons != null" >
+        closed_reasons = #{closedReasons,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orderRemarks != null" >
+        order_remarks = #{orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="daochuStatus != null" >
+        daochu_status = #{daochuStatus,jdbcType=BIT},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByOrderNoSelective" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    update t_trade_service_order
+    <set >
+      <if test="masterOrderNo != null" >
+        master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        unit_type = #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="unitNumber != null" >
+        unit_number = #{unitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null" >
+        use_time = #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rmbRateBusiness != null" >
+        RMB_rate_business = #{rmbRateBusiness,jdbcType=DOUBLE},
+      </if>
+      <if test="rmbRateCustomer != null" >
+        RMB_rate_customer = #{rmbRateCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="commissionRate != null" >
+        commission_rate = #{commissionRate,jdbcType=INTEGER},
+      </if>
+      <if test="commissionAmount != null" >
+        commission_amount = #{commissionAmount,jdbcType=INTEGER},
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount = #{discountAmount,jdbcType=INTEGER},
+      </if>
+      <if test="refundAmount != null" >
+        refund_amount = #{refundAmount,jdbcType=INTEGER},
+      </if>
+      <if test="closedReasons != null" >
+        closed_reasons = #{closedReasons,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orderRemarks != null" >
+        order_remarks = #{orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="daochuStatus != null" >
+        daochu_status = #{daochuStatus,jdbcType=BIT},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    update t_trade_service_order
+    set master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=VARCHAR},
+      unit_type = #{unitType,jdbcType=VARCHAR},
+      unit_name = #{unitName,jdbcType=VARCHAR},
+      unit_price = #{unitPrice,jdbcType=INTEGER},
+      unit_number = #{unitNumber,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=INTEGER},
+      use_time = #{useTime,jdbcType=TIMESTAMP},
+      RMB_rate_business = #{rmbRateBusiness,jdbcType=DOUBLE},
+      RMB_rate_customer = #{rmbRateCustomer,jdbcType=DOUBLE},
+      commission_rate = #{commissionRate,jdbcType=INTEGER},
+      commission_amount = #{commissionAmount,jdbcType=INTEGER},
+      discount_amount = #{discountAmount,jdbcType=INTEGER},
+      refund_amount = #{refundAmount,jdbcType=INTEGER},
+      closed_reasons = #{closedReasons,jdbcType=INTEGER},
+      order_type = #{orderType,jdbcType=INTEGER},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      order_remarks = #{orderRemarks,jdbcType=VARCHAR},
+      daochu_status = #{daochuStatus,jdbcType=BIT},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
