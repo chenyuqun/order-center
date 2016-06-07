@@ -11,6 +11,8 @@ package com.zizaike.trade.dao.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.zizaike.core.framework.mybatis.impl.GenericMyIbatisDao;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
@@ -24,6 +26,7 @@ import com.zizaike.trade.dao.TradeServiceOrderDao;
  * @since    JDK 1.7  
  * @see        
  */
+@Repository
 public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrder, Integer> implements TradeServiceOrderDao {
     /**
      * 命名空间

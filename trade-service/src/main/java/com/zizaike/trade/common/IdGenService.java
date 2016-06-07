@@ -37,9 +37,6 @@ public class IdGenService {
     public final static long sequenceMask = -1L ^ -1L << sequenceBits;
     private long lastTimestamp = -1L;
     public IdGenService() {
-
-        // TODO Auto-generated constructor stub  
-
     }
     public IdGenService(final long workerId) {
         this.workerId = workerId;

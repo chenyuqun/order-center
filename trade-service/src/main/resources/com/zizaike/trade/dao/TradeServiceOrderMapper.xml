@@ -8,12 +8,23 @@
     <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
     <result column="unit_type" property="unitType" jdbcType="VARCHAR" />
     <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+    <result column="guest_name" property="guestName" jdbcType="VARCHAR" />
+    <result column="first_name" property="firstName" jdbcType="VARCHAR" />
+    <result column="last_name" property="lastName" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="unit_price" property="unitPrice" jdbcType="INTEGER" />
     <result column="unit_number" property="unitNumber" jdbcType="INTEGER" />
     <result column="total_price" property="totalPrice" jdbcType="INTEGER" />
     <result column="use_time" property="useTime" jdbcType="TIMESTAMP" />
+    <result column="business_dest_id" property="businessDestId" jdbcType="INTEGER" />
+    <result column="customer_dest_id" property="customerDestId" jdbcType="INTEGER" />
     <result column="RMB_rate_business" property="rmbRateBusiness" jdbcType="DOUBLE" />
     <result column="RMB_rate_customer" property="rmbRateCustomer" jdbcType="DOUBLE" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="customer_province" property="customerProvince" jdbcType="VARCHAR" />
     <result column="commission_rate" property="commissionRate" jdbcType="INTEGER" />
     <result column="commission_amount" property="commissionAmount" jdbcType="INTEGER" />
     <result column="discount_amount" property="discountAmount" jdbcType="INTEGER" />
@@ -27,10 +38,11 @@
     <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, master_order_no, order_no, unit_id, unit_type, unit_name, unit_price, unit_number, 
-    total_price, use_time, RMB_rate_business, RMB_rate_customer, commission_rate, commission_amount, 
-    discount_amount, refund_amount, closed_reasons, order_type, order_status, order_remarks, 
-    daochu_status, create_at, update_at
+    id, master_order_no, order_no, unit_id, unit_type, unit_name, guest_name, first_name, 
+    last_name, mobile, email, wechat, remark, unit_price, unit_number, total_price, use_time, 
+    business_dest_id, customer_dest_id, RMB_rate_business, RMB_rate_customer, ip, customer_province, 
+    commission_rate, commission_amount, discount_amount, refund_amount, closed_reasons, 
+    order_type, order_status, order_remarks, daochu_status, create_at, update_at
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -45,20 +57,28 @@
   <insert id="insert" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
     insert into t_trade_service_order (id, master_order_no, order_no, 
       unit_id, unit_type, unit_name, 
-      unit_price, unit_number, total_price, 
-      use_time, RMB_rate_business, RMB_rate_customer, 
-      commission_rate, commission_amount, discount_amount, 
-      refund_amount, closed_reasons, order_type, 
-      order_status, order_remarks, daochu_status, 
-      create_at, update_at)
+      guest_name, first_name, last_name, 
+      mobile, email, wechat, 
+      remark, unit_price, unit_number, 
+      total_price, use_time, business_dest_id, 
+      customer_dest_id, RMB_rate_business, RMB_rate_customer, 
+      ip, customer_province, commission_rate, 
+      commission_amount, discount_amount, refund_amount, 
+      closed_reasons, order_type, order_status, 
+      order_remarks, daochu_status, create_at, 
+      update_at)
     values (#{id,jdbcType=INTEGER}, #{masterOrderNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
       #{unitId,jdbcType=VARCHAR}, #{unitType,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, 
-      #{unitPrice,jdbcType=INTEGER}, #{unitNumber,jdbcType=INTEGER}, #{totalPrice,jdbcType=INTEGER}, 
-      #{useTime,jdbcType=TIMESTAMP}, #{rmbRateBusiness,jdbcType=DOUBLE}, #{rmbRateCustomer,jdbcType=DOUBLE}, 
-      #{commissionRate,jdbcType=INTEGER}, #{commissionAmount,jdbcType=INTEGER}, #{discountAmount,jdbcType=INTEGER}, 
-      #{refundAmount,jdbcType=INTEGER}, #{closedReasons,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER}, 
-      #{orderStatus,jdbcType=INTEGER}, #{orderRemarks,jdbcType=VARCHAR}, #{daochuStatus,jdbcType=BIT}, 
-      #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP})
+      #{guestName,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{unitPrice,jdbcType=INTEGER}, #{unitNumber,jdbcType=INTEGER}, 
+      #{totalPrice,jdbcType=INTEGER}, #{useTime,jdbcType=TIMESTAMP}, #{businessDestId,jdbcType=INTEGER}, 
+      #{customerDestId,jdbcType=INTEGER}, #{rmbRateBusiness,jdbcType=DOUBLE}, #{rmbRateCustomer,jdbcType=DOUBLE}, 
+      #{ip,jdbcType=VARCHAR}, #{customerProvince,jdbcType=VARCHAR}, #{commissionRate,jdbcType=INTEGER}, 
+      #{commissionAmount,jdbcType=INTEGER}, #{discountAmount,jdbcType=INTEGER}, #{refundAmount,jdbcType=INTEGER}, 
+      #{closedReasons,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER}, #{orderStatus,jdbcType=INTEGER}, 
+      #{orderRemarks,jdbcType=VARCHAR}, #{daochuStatus,jdbcType=BIT}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{updateAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
     insert into t_trade_service_order
@@ -81,6 +101,27 @@
       <if test="unitName != null" >
         unit_name,
       </if>
+      <if test="guestName != null" >
+        guest_name,
+      </if>
+      <if test="firstName != null" >
+        first_name,
+      </if>
+      <if test="lastName != null" >
+        last_name,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="wechat != null" >
+        wechat,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
       <if test="unitPrice != null" >
         unit_price,
       </if>
@@ -93,11 +134,23 @@
       <if test="useTime != null" >
         use_time,
       </if>
+      <if test="businessDestId != null" >
+        business_dest_id,
+      </if>
+      <if test="customerDestId != null" >
+        customer_dest_id,
+      </if>
       <if test="rmbRateBusiness != null" >
         RMB_rate_business,
       </if>
       <if test="rmbRateCustomer != null" >
         RMB_rate_customer,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="customerProvince != null" >
+        customer_province,
       </if>
       <if test="commissionRate != null" >
         commission_rate,
@@ -152,6 +205,27 @@
       <if test="unitName != null" >
         #{unitName,jdbcType=VARCHAR},
       </if>
+      <if test="guestName != null" >
+        #{guestName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null" >
+        #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null" >
+        #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="unitPrice != null" >
         #{unitPrice,jdbcType=INTEGER},
       </if>
@@ -164,11 +238,23 @@
       <if test="useTime != null" >
         #{useTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="businessDestId != null" >
+        #{businessDestId,jdbcType=INTEGER},
+      </if>
+      <if test="customerDestId != null" >
+        #{customerDestId,jdbcType=INTEGER},
+      </if>
       <if test="rmbRateBusiness != null" >
         #{rmbRateBusiness,jdbcType=DOUBLE},
       </if>
       <if test="rmbRateCustomer != null" >
         #{rmbRateCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="customerProvince != null" >
+        #{customerProvince,jdbcType=VARCHAR},
       </if>
       <if test="commissionRate != null" >
         #{commissionRate,jdbcType=INTEGER},
@@ -223,6 +309,27 @@
       <if test="unitName != null" >
         unit_name = #{unitName,jdbcType=VARCHAR},
       </if>
+      <if test="guestName != null" >
+        guest_name = #{guestName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null" >
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null" >
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="unitPrice != null" >
         unit_price = #{unitPrice,jdbcType=INTEGER},
       </if>
@@ -235,11 +342,23 @@
       <if test="useTime != null" >
         use_time = #{useTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="businessDestId != null" >
+        business_dest_id = #{businessDestId,jdbcType=INTEGER},
+      </if>
+      <if test="customerDestId != null" >
+        customer_dest_id = #{customerDestId,jdbcType=INTEGER},
+      </if>
       <if test="rmbRateBusiness != null" >
         RMB_rate_business = #{rmbRateBusiness,jdbcType=DOUBLE},
       </if>
       <if test="rmbRateCustomer != null" >
         RMB_rate_customer = #{rmbRateCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="customerProvince != null" >
+        customer_province = #{customerProvince,jdbcType=VARCHAR},
       </if>
       <if test="commissionRate != null" >
         commission_rate = #{commissionRate,jdbcType=INTEGER},
@@ -277,77 +396,6 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
-  <update id="updateByOrderNoSelective" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
-    update t_trade_service_order
-    <set >
-      <if test="masterOrderNo != null" >
-        master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
-      </if>
-      <if test="unitId != null" >
-        unit_id = #{unitId,jdbcType=VARCHAR},
-      </if>
-      <if test="unitType != null" >
-        unit_type = #{unitType,jdbcType=VARCHAR},
-      </if>
-      <if test="unitName != null" >
-        unit_name = #{unitName,jdbcType=VARCHAR},
-      </if>
-      <if test="unitPrice != null" >
-        unit_price = #{unitPrice,jdbcType=INTEGER},
-      </if>
-      <if test="unitNumber != null" >
-        unit_number = #{unitNumber,jdbcType=INTEGER},
-      </if>
-      <if test="totalPrice != null" >
-        total_price = #{totalPrice,jdbcType=INTEGER},
-      </if>
-      <if test="useTime != null" >
-        use_time = #{useTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="rmbRateBusiness != null" >
-        RMB_rate_business = #{rmbRateBusiness,jdbcType=DOUBLE},
-      </if>
-      <if test="rmbRateCustomer != null" >
-        RMB_rate_customer = #{rmbRateCustomer,jdbcType=DOUBLE},
-      </if>
-      <if test="commissionRate != null" >
-        commission_rate = #{commissionRate,jdbcType=INTEGER},
-      </if>
-      <if test="commissionAmount != null" >
-        commission_amount = #{commissionAmount,jdbcType=INTEGER},
-      </if>
-      <if test="discountAmount != null" >
-        discount_amount = #{discountAmount,jdbcType=INTEGER},
-      </if>
-      <if test="refundAmount != null" >
-        refund_amount = #{refundAmount,jdbcType=INTEGER},
-      </if>
-      <if test="closedReasons != null" >
-        closed_reasons = #{closedReasons,jdbcType=INTEGER},
-      </if>
-      <if test="orderType != null" >
-        order_type = #{orderType,jdbcType=INTEGER},
-      </if>
-      <if test="orderStatus != null" >
-        order_status = #{orderStatus,jdbcType=INTEGER},
-      </if>
-      <if test="orderRemarks != null" >
-        order_remarks = #{orderRemarks,jdbcType=VARCHAR},
-      </if>
-      <if test="daochuStatus != null" >
-        daochu_status = #{daochuStatus,jdbcType=BIT},
-      </if>
-      <if test="createAt != null" >
-        create_at = #{createAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateAt != null" >
-        update_at = #{updateAt,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where order_no = #{orderNo,jdbcType=VARCHAR}
-  </update>
-  
   <update id="updateByPrimaryKey" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
     update t_trade_service_order
     set master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
@@ -355,12 +403,23 @@
       unit_id = #{unitId,jdbcType=VARCHAR},
       unit_type = #{unitType,jdbcType=VARCHAR},
       unit_name = #{unitName,jdbcType=VARCHAR},
+      guest_name = #{guestName,jdbcType=VARCHAR},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
       unit_price = #{unitPrice,jdbcType=INTEGER},
       unit_number = #{unitNumber,jdbcType=INTEGER},
       total_price = #{totalPrice,jdbcType=INTEGER},
       use_time = #{useTime,jdbcType=TIMESTAMP},
+      business_dest_id = #{businessDestId,jdbcType=INTEGER},
+      customer_dest_id = #{customerDestId,jdbcType=INTEGER},
       RMB_rate_business = #{rmbRateBusiness,jdbcType=DOUBLE},
       RMB_rate_customer = #{rmbRateCustomer,jdbcType=DOUBLE},
+      ip = #{ip,jdbcType=VARCHAR},
+      customer_province = #{customerProvince,jdbcType=VARCHAR},
       commission_rate = #{commissionRate,jdbcType=INTEGER},
       commission_amount = #{commissionAmount,jdbcType=INTEGER},
       discount_amount = #{discountAmount,jdbcType=INTEGER},
