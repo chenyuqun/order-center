@@ -23,6 +23,7 @@ import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
 import com.zizaike.is.commodity.AdditionalServiceService;
+import com.zizaike.is.recommend.DestConfigService;
 import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
 import com.zizaike.trade.common.OrderNoGenUnit;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
@@ -44,6 +45,8 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
     AdditionalServiceService additionalServiceService;
     @Autowired
     OrderNoGenUnit orderNoGenUnit;
+    @Autowired
+    DestConfigService destConfigService;
     @Override
     public List<TradeServiceOrder> createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException {
         TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
