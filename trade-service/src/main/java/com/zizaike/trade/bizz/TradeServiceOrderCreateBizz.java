@@ -9,8 +9,9 @@
   
 package com.zizaike.trade.bizz;  
 
-import java.util.Map;
+import java.util.List;
 
+import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
 
@@ -34,6 +35,6 @@ public interface TradeServiceOrderCreateBizz {
      * @return  
      * @since JDK 1.7
      */
-    public TradeServiceOrder createServiceOrder(TradeServiceOrderCreateParam param);
+    public List<TradeServiceOrder> createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException;
 }
   

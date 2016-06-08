@@ -13,7 +13,7 @@
     <!-- 配置超时时间 -->
    <dubbo:consumer timeout="${dubbo.timeout}"/>
    <dubbo:monitor protocol="registry"/>
-    
-   <dubbo:service interface="com.zizaike.is.recommend.HotRecommendService" version="1.0.0" ref="hotRecommendService"  group="${dubbo.group}" />  
-	<bean id="hotRecommendService" class="com.zizaike.recommend.service.impl.HotRecommendServiceImpl" />
+    <!-- 交易服务订单 -->
+   <dubbo:service interface="com.zizaike.is.trade.TradeServiceOrderService" version="1.0.0" ref="tradeServiceOrderService"  group="${dubbo.group}" />  
+	<bean id="tradeServiceOrderService" class="com.zizaike.trade.service.impl.TradeServiceOrderServiceImpl" />
 </beans>

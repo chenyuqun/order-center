@@ -8,6 +8,7 @@
   <description>订单中心</description>
   <modules>
   	<module>trade-service</module>
+  	<module>trade-api</module>
   </modules>
 <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

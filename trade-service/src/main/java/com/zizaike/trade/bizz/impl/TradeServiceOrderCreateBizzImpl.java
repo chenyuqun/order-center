@@ -9,12 +9,22 @@
   
 package com.zizaike.trade.bizz.impl;  
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zizaike.core.framework.exception.IllegalParamterException;
+import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.entity.commodity.AdditionalService;
 import com.zizaike.entity.trade.TradeServiceOrder;
+import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
+import com.zizaike.is.commodity.AdditionalServiceService;
 import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
+import com.zizaike.trade.common.OrderNoGenUnit;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
 
 /**  
@@ -30,12 +40,40 @@ import com.zizaike.trade.dao.TradeServiceOrderDao;
 public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateBizz{
     @Autowired
     TradeServiceOrderDao tradeServiceOrderDao;
+    @Autowired
+    AdditionalServiceService additionalServiceService;
+    @Autowired
+    OrderNoGenUnit orderNoGenUnit;
     @Override
-    public TradeServiceOrder createServiceOrder(TradeServiceOrderCreateParam param) {
+    public List<TradeServiceOrder> createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException {
         TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
-        
+        // 参数校验
+        validateTradeServiceOrderCreateParam(param);
+        List<AdditionalServiceParam> list = param.getServiceList();
+        List<AdditionalService> additionalServiceList = new ArrayList<AdditionalService>();
+        for (AdditionalServiceParam additionalServiceParam : list) {
+            additionalServiceList.add(additionalServiceService.queryByServiceId(additionalServiceParam.getServiceId()));
+        }
+        for (AdditionalService additionalService : additionalServiceList) {
+            
+        }
         tradeServiceOrderDao.createTradeServiceOrder(tradeServiceOrder);
-         return tradeServiceOrder;
+         return null;
+    }
+    public void validateTradeServiceOrderCreateParam(TradeServiceOrderCreateParam param) throws IllegalParamterException{
+        if(param==null){
+            throw new IllegalParamterException("param is not null");
+        }
+        if(StringUtils.isEmpty(param.getGuestName())){
+            throw new IllegalParamterException("gustName is not null");
+        }
+        if(StringUtils.isEmpty(param.getMobile())){
+            throw new IllegalParamterException("mobile is not null");
+        }
+        if(StringUtils.isEmpty(param.getEmail())){
+            throw new IllegalParamterException("email is not null");
+        }
+        //TODO  校验继续
     }
 
 }
