@@ -35,6 +35,6 @@ public interface TradeServiceOrderCreateBizz {
      * @return  
      * @since JDK 1.7
      */
-    public List<TradeServiceOrder> createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException;
+    public List<TradeServiceOrder> createServiceBatchOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException;
 }
   

@@ -42,7 +42,7 @@ public interface TradeServiceOrderDao {
      * @return  
      * @since JDK 1.7
      */
-    List<TradeServiceOrder> saveBatch(List<TradeServiceOrder> tradeServiceOrders);
+    void saveBatch(List<TradeServiceOrder> tradeServiceOrders);
     /**
      * 
      * updateTradeServiceOrder:更新服务订单. <br/>  

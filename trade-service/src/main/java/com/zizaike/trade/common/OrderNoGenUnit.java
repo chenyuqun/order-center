@@ -48,4 +48,16 @@ public class OrderNoGenUnit {
             throw new OrderNOCreateException();
         }
     }
+    /**
+     * 
+     * genServiceOrderId:生成服务订单. <br/>  
+     *  
+     * @author snow.zhang  
+     * @return
+     * @throws OrderNOCreateException  
+     * @since JDK 1.7
+     */
+    public String genServiceOrderId() throws OrderNOCreateException {
+       return  genOrderId("S");
+    }
 }

@@ -433,4 +433,34 @@
       update_at = #{updateAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <insert id="insertBatch" useGeneratedKeys="true" parameterType="ArrayList" >
+    insert into t_trade_service_order ( master_order_no, order_no, 
+      unit_id, unit_type, unit_name, 
+      guest_name, first_name, last_name, 
+      mobile, email, wechat, 
+      remark, unit_price, unit_number, 
+      total_price, use_time, business_dest_id, 
+      customer_dest_id, RMB_rate_business, RMB_rate_customer, 
+      ip, customer_province, commission_rate, 
+      commission_amount, discount_amount, refund_amount, 
+      closed_reasons, order_type, order_status, 
+      order_remarks, daochu_status, create_at, 
+      update_at)
+    values 
+    <foreach collection="list" item="item" index="index" separator="," >  
+     (#{item.masterOrderNo,jdbcType=VARCHAR}, #{item.orderNo,jdbcType=VARCHAR}, 
+      #{item.unitId,jdbcType=VARCHAR}, #{item.unitType,jdbcType=VARCHAR}, #{item.unitName,jdbcType=VARCHAR}, 
+      #{item.guestName,jdbcType=VARCHAR}, #{item.firstName,jdbcType=VARCHAR}, #{item.lastName,jdbcType=VARCHAR}, 
+      #{item.mobile,jdbcType=VARCHAR}, #{item.email,jdbcType=VARCHAR}, #{item.wechat,jdbcType=VARCHAR}, 
+      #{item.remark,jdbcType=VARCHAR}, #{item.unitPrice,jdbcType=INTEGER}, #{item.unitNumber,jdbcType=INTEGER}, 
+      #{item.totalPrice,jdbcType=INTEGER}, #{item.useTime,jdbcType=TIMESTAMP}, #{item.businessDestId,jdbcType=INTEGER}, 
+      #{item.customerDestId,jdbcType=INTEGER}, #{item.rmbRateBusiness,jdbcType=DOUBLE}, #{item.rmbRateCustomer,jdbcType=DOUBLE}, 
+      #{item.ip,jdbcType=VARCHAR}, #{item.customerProvince,jdbcType=VARCHAR}, #{item.commissionRate,jdbcType=INTEGER}, 
+      #{item.commissionAmount,jdbcType=INTEGER}, #{item.discountAmount,jdbcType=INTEGER}, #{item.refundAmount,jdbcType=INTEGER}, 
+      #{item.closedReasons,jdbcType=INTEGER}, #{item.orderType,jdbcType=INTEGER}, #{item.orderStatus,jdbcType=INTEGER}, 
+      #{item.orderRemarks,jdbcType=VARCHAR}, #{item.daochuStatus,jdbcType=BIT}, #{item.createAt,jdbcType=TIMESTAMP}, 
+      #{item.updateAt,jdbcType=TIMESTAMP})
+       </foreach>  
+  </insert>
 </mapper>

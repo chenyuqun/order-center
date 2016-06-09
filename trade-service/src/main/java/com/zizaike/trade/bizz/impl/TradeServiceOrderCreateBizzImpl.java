@@ -48,19 +48,23 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
     @Autowired
     DestConfigService destConfigService;
     @Override
-    public List<TradeServiceOrder> createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException {
-        TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
+    public List<TradeServiceOrder> createServiceBatchOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException {
         // 参数校验
         validateTradeServiceOrderCreateParam(param);
+        //TODO 校验库存
+        
+        //预定服务参数
         List<AdditionalServiceParam> list = param.getServiceList();
         List<AdditionalService> additionalServiceList = new ArrayList<AdditionalService>();
+        List<TradeServiceOrder> tradeServiceOrders = new ArrayList<TradeServiceOrder>();
         for (AdditionalServiceParam additionalServiceParam : list) {
             additionalServiceList.add(additionalServiceService.queryByServiceId(additionalServiceParam.getServiceId()));
         }
+        //特色服务列表
         for (AdditionalService additionalService : additionalServiceList) {
-            
+            TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
         }
-        tradeServiceOrderDao.createTradeServiceOrder(tradeServiceOrder);
+        tradeServiceOrderDao.saveBatch(tradeServiceOrders);
          return null;
     }
     public void validateTradeServiceOrderCreateParam(TradeServiceOrderCreateParam param) throws IllegalParamterException{

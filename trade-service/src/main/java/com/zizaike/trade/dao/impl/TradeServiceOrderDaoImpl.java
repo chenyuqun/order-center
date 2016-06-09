@@ -40,11 +40,10 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
     }
 
     @Override
-    public List<TradeServiceOrder> saveBatch(List<TradeServiceOrder> tradeServiceOrders) {
+    public void saveBatch(List<TradeServiceOrder> tradeServiceOrders) {
 
         
-        this.getSqlSession().insert(NAMESPACE+"insertSelective", tradeServiceOrders);
-        return tradeServiceOrders;
+        this.getSqlSession().insert(NAMESPACE+"insertBatch", tradeServiceOrders);
     }
 
     @Override
