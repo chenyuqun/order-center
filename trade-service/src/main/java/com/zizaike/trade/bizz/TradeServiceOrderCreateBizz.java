@@ -9,10 +9,9 @@
   
 package com.zizaike.trade.bizz;  
 
-import java.util.List;
+import java.util.Map;
 
 import com.zizaike.core.framework.exception.ZZKServiceException;
-import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
 
 
@@ -28,13 +27,14 @@ import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
 public interface TradeServiceOrderCreateBizz {
     /**
      * 
-     * createServiceOrder:创建服务订单. <br/>  
+     * createServiceOrder:创建单个服务订单. <br/>  
      *  
      * @author snow.zhang  
      * @param param
-     * @return  
+     * @return
+     * @throws ZZKServiceException  
      * @since JDK 1.7
      */
-    public List<TradeServiceOrder> createServiceBatchOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException;
+    public Map<String,Object> createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException;
 }
   

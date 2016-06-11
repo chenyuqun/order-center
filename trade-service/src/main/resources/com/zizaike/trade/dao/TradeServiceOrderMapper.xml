@@ -6,7 +6,7 @@
     <result column="master_order_no" property="masterOrderNo" jdbcType="VARCHAR" />
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
     <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
-    <result column="unit_type" property="unitType" jdbcType="VARCHAR" />
+    <result column="unit_type" property="additionalServiceType" typeHandler="com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler" />
     <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
     <result column="guest_name" property="guestName" jdbcType="VARCHAR" />
     <result column="first_name" property="firstName" jdbcType="VARCHAR" />
@@ -68,7 +68,9 @@
       order_remarks, daochu_status, create_at, 
       update_at)
     values (#{id,jdbcType=INTEGER}, #{masterOrderNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
-      #{unitId,jdbcType=VARCHAR}, #{unitType,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, 
+      #{unitId,jdbcType=VARCHAR},
+	  #{additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
+      #{unitName,jdbcType=VARCHAR}, 
       #{guestName,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{unitPrice,jdbcType=INTEGER}, #{unitNumber,jdbcType=INTEGER}, 
@@ -95,7 +97,7 @@
       <if test="unitId != null" >
         unit_id,
       </if>
-      <if test="unitType != null" >
+      <if test="additionalServiceType != null" >
         unit_type,
       </if>
       <if test="unitName != null" >
@@ -199,8 +201,8 @@
       <if test="unitId != null" >
         #{unitId,jdbcType=VARCHAR},
       </if>
-      <if test="unitType != null" >
-        #{unitType,jdbcType=VARCHAR},
+      <if test="additionalServiceType != null" >
+         #{additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
       </if>
       <if test="unitName != null" >
         #{unitName,jdbcType=VARCHAR},
@@ -303,8 +305,8 @@
       <if test="unitId != null" >
         unit_id = #{unitId,jdbcType=VARCHAR},
       </if>
-      <if test="unitType != null" >
-        unit_type = #{unitType,jdbcType=VARCHAR},
+      <if test="additionalServiceType != null" >
+        unit_type = #{additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
       </if>
       <if test="unitName != null" >
         unit_name = #{unitName,jdbcType=VARCHAR},
@@ -402,7 +404,7 @@
       order_no = #{orderNo,jdbcType=VARCHAR},
       unit_id = #{unitId,jdbcType=VARCHAR},
       unit_type = #{unitType,jdbcType=VARCHAR},
-      unit_name = #{unitName,jdbcType=VARCHAR},
+      unit_name = #{additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
       guest_name = #{guestName,jdbcType=VARCHAR},
       first_name = #{firstName,jdbcType=VARCHAR},
       last_name = #{lastName,jdbcType=VARCHAR},
@@ -450,7 +452,9 @@
     values 
     <foreach collection="list" item="item" index="index" separator="," >  
      (#{item.masterOrderNo,jdbcType=VARCHAR}, #{item.orderNo,jdbcType=VARCHAR}, 
-      #{item.unitId,jdbcType=VARCHAR}, #{item.unitType,jdbcType=VARCHAR}, #{item.unitName,jdbcType=VARCHAR}, 
+      #{item.unitId,jdbcType=VARCHAR}, 
+      #{item.additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
+       #{item.unitName,jdbcType=VARCHAR}, 
       #{item.guestName,jdbcType=VARCHAR}, #{item.firstName,jdbcType=VARCHAR}, #{item.lastName,jdbcType=VARCHAR}, 
       #{item.mobile,jdbcType=VARCHAR}, #{item.email,jdbcType=VARCHAR}, #{item.wechat,jdbcType=VARCHAR}, 
       #{item.remark,jdbcType=VARCHAR}, #{item.unitPrice,jdbcType=INTEGER}, #{item.unitNumber,jdbcType=INTEGER}, 
@@ -463,4 +467,10 @@
       #{item.updateAt,jdbcType=TIMESTAMP})
        </foreach>  
   </insert>
+  <select id="queryByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_trade_service_order
+    where  order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
 </mapper>

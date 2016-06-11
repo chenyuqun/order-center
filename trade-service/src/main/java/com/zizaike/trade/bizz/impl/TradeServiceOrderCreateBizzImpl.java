@@ -9,13 +9,15 @@
   
 package com.zizaike.trade.bizz.impl;  
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zizaike.core.common.util.AmountUtil;
 import com.zizaike.core.framework.exception.IllegalParamterException;
 import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.entity.commodity.AdditionalService;
@@ -47,26 +49,6 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
     OrderNoGenUnit orderNoGenUnit;
     @Autowired
     DestConfigService destConfigService;
-    @Override
-    public List<TradeServiceOrder> createServiceBatchOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException {
-        // 参数校验
-        validateTradeServiceOrderCreateParam(param);
-        //TODO 校验库存
-        
-        //预定服务参数
-        List<AdditionalServiceParam> list = param.getServiceList();
-        List<AdditionalService> additionalServiceList = new ArrayList<AdditionalService>();
-        List<TradeServiceOrder> tradeServiceOrders = new ArrayList<TradeServiceOrder>();
-        for (AdditionalServiceParam additionalServiceParam : list) {
-            additionalServiceList.add(additionalServiceService.queryByServiceId(additionalServiceParam.getServiceId()));
-        }
-        //特色服务列表
-        for (AdditionalService additionalService : additionalServiceList) {
-            TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
-        }
-        tradeServiceOrderDao.saveBatch(tradeServiceOrders);
-         return null;
-    }
     public void validateTradeServiceOrderCreateParam(TradeServiceOrderCreateParam param) throws IllegalParamterException{
         if(param==null){
             throw new IllegalParamterException("param is not null");
@@ -81,6 +63,46 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
             throw new IllegalParamterException("email is not null");
         }
         //TODO  校验继续
+    }
+    @Override
+    public Map<String,Object> createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException {
+          
+        // 参数校验
+        // validateTradeServiceOrderCreateParam(param);
+         //TODO 校验库存
+         Map resultMap = new HashMap();
+         //预定服务参数
+         AdditionalServiceParam additionalServiceParam = param.getAdditionalServiceParam();
+         AdditionalService additionalService = additionalServiceService.queryByServiceId(additionalServiceParam.getServiceId());
+         //特色服务列表
+         TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
+         String orderNo = orderNoGenUnit.genServiceOrderId();
+         tradeServiceOrder.setOrderNo(orderNo);
+         tradeServiceOrder.setUnitId(additionalService.getId()+"");
+         tradeServiceOrder.setAdditionalServiceType(additionalService.getAdditionalServiceType());
+         tradeServiceOrder.setUnitName(additionalService.getServiceName());
+         tradeServiceOrder.setIp(param.getIp());
+         tradeServiceOrder.setCustomerProvince(param.getCustomerProvince());
+         tradeServiceOrder.setCustomerDestId(param.getCustomerDestId());
+         tradeServiceOrder.setBusinessDestId(additionalService.getDestId());
+         tradeServiceOrder.setGuestName(param.getGuestName());
+         tradeServiceOrder.setFirstName(param.getFirstName());
+         tradeServiceOrder.setLastName(param.getLastName());
+         tradeServiceOrder.setMobile(param.getMobile());
+         tradeServiceOrder.setEmail(param.getEmail());
+         tradeServiceOrder.setWechat(param.getWechat());
+         tradeServiceOrder.setRemark(param.getRemark());
+         tradeServiceOrder.setUnitNumber(param.getAdditionalServiceParam().getServiceNumber());
+         tradeServiceOrder.setUnitPrice(AmountUtil.changYuanToFen(additionalService.getPrice()));
+         tradeServiceOrder.setTotalPrice(param.getAdditionalServiceParam().getServiceNumber()*AmountUtil.changYuanToFen(additionalService.getPrice()));
+         tradeServiceOrder.setUseTime(additionalServiceParam.getUseTime());
+         tradeServiceOrder.setRmbRateBusiness(destConfigService.queryByDestId(additionalService.getDestId()).getExchangeRate());
+         tradeServiceOrder.setRmbRateCustomer(destConfigService.queryByDestId(param.getCustomerDestId()).getExchangeRate());
+         tradeServiceOrder.setCreateAt(new Date());
+         tradeServiceOrder.setUpdateAt(new Date());
+         tradeServiceOrderDao.createTradeServiceOrder(tradeServiceOrder);
+         resultMap.put("data", tradeServiceOrderDao.queryByOrderNo(orderNo));
+          return resultMap;
     }
 
 }

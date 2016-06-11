@@ -33,10 +33,9 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
      */
     private static final String NAMESPACE = "com.zizaike.trade.dao.TradeServiceOrderMapper." ;
     @Override
-    public TradeServiceOrder createTradeServiceOrder(TradeServiceOrder tradeServiceOrder) {
+    public void createTradeServiceOrder(TradeServiceOrder tradeServiceOrder) {
          
          this.getSqlSession().insert(NAMESPACE+"insertSelective", tradeServiceOrder);
-         return tradeServiceOrder;
     }
 
     @Override
@@ -50,6 +49,12 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
     public void updateTradeServiceOrder(TradeServiceOrder tradeServiceOrder) {
         
         this.getSqlSession().update(NAMESPACE+"updateByOrderNoSelective", tradeServiceOrder);
+    }
+
+    @Override
+    public TradeServiceOrder queryByOrderNo(String orderNo) {
+          
+        return this.getSqlSession().selectOne(NAMESPACE+"queryByOrderNo", orderNo);
     }
 
 }

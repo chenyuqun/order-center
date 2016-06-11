@@ -11,6 +11,7 @@ package com.zizaike.trade.dao;
 
 import java.util.List;
 
+import com.zizaike.core.framework.springext.database.Master;
 import com.zizaike.entity.trade.TradeServiceOrder;
 
 /**  
@@ -32,7 +33,8 @@ public interface TradeServiceOrderDao {
      * @return  
      * @since JDK 1.7
      */
-    TradeServiceOrder createTradeServiceOrder(TradeServiceOrder tradeServiceOrder);
+    @Master
+    void createTradeServiceOrder(TradeServiceOrder tradeServiceOrder);
     /**
      * 
      * saveBatch:批量生成服务订单. <br/>  
@@ -42,6 +44,7 @@ public interface TradeServiceOrderDao {
      * @return  
      * @since JDK 1.7
      */
+    @Master
     void saveBatch(List<TradeServiceOrder> tradeServiceOrders);
     /**
      * 
@@ -52,7 +55,19 @@ public interface TradeServiceOrderDao {
      * @return  
      * @since JDK 1.7
      */
+    @Master
     void updateTradeServiceOrder(TradeServiceOrder tradeServiceOrder);
+    /**
+     * 
+     * queryByOrderNo:查看服务订单 能过订单号. <br/>  
+     *  
+     * @author snow.zhang  
+     * @param OrderNo
+     * @return  
+     * @since JDK 1.7
+     */
+    @Master
+    TradeServiceOrder queryByOrderNo(String orderNo);
     
 }
   

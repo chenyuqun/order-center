@@ -16,7 +16,7 @@
 		<excludePropertyFiles></excludePropertyFiles>
 		<project.build.finalname>trade-service</project.build.finalname>
 		
-		<zizaike.core.version>1.0.9-RELEASE</zizaike.core.version>
+		<zizaike.core.version>1.0.10-SNAPSHOT</zizaike.core.version>
 		<zizaike.entity.version>1.0.20-SNAPSHOT</zizaike.entity.version>
 		<zizaike.is.version>1.0.20-SNAPSHOT</zizaike.is.version>
 		
