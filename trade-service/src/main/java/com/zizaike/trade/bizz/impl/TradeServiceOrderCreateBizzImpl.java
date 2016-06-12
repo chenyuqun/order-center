@@ -75,7 +75,6 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
         // 参数校验
         // validateTradeServiceOrderCreateParam(param);
          //TODO 校验库存
-         Map resultMap = new HashMap();
          //预定服务参数
          AdditionalServiceParam additionalServiceParam = param.getAdditionalServiceParam();
          AdditionalService additionalService = additionalServiceService.queryByServiceId(additionalServiceParam.getServiceId());
