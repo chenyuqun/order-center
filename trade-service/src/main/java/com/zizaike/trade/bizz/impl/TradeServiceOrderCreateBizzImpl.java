@@ -10,8 +10,6 @@
 package com.zizaike.trade.bizz.impl;  
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,6 @@ import com.zizaike.is.commodity.AdditionalServiceService;
 import com.zizaike.is.recommend.DestConfigService;
 import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
 import com.zizaike.trade.common.OrderNoGenUnit;
-import com.zizaike.trade.common.TradeConstant;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
 
 /**  
@@ -66,6 +63,34 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
         }
         if(StringUtils.isEmpty(param.getEmail())){
             throw new IllegalParamterException("email is not null");
+        }
+        if(StringUtils.isEmpty(param.getIp())){
+            throw new IllegalParamterException("ip is not null");
+        }
+        if(StringUtils.isEmpty(param.getFirstName())){
+            throw new IllegalParamterException("first name is not null");
+        }
+        if(StringUtils.isEmpty(param.getLastName())){
+            throw new IllegalParamterException("last name is not null");
+        }
+        if(param.getCustomerDestId()==null || param.getCustomerDestId()!=0){
+            throw new IllegalParamterException("customerDestId is not null");
+        }
+        if(param.getAdditionalServiceParam()==null){
+            throw new IllegalParamterException("additionalServiceParam is not null");
+        }
+        AdditionalServiceParam additionalServiceParam = param.getAdditionalServiceParam();
+        if(additionalServiceParam==null){
+            throw new IllegalParamterException("additionalServiceParam is not null");
+        }
+        if(additionalServiceParam.getServiceId()==null||additionalServiceParam.getServiceId()<=0 ){
+            throw new IllegalParamterException("additionalServiceParam.serviceId is not  null or <=0");
+        }
+        if(additionalServiceParam.getServiceNumber()==null||additionalServiceParam.getServiceNumber()<=0 ){
+            throw new IllegalParamterException("additionalServiceParam.getServiceNumber is not  null or <=0");
+        }
+        if(additionalServiceParam.getUseTime()==null){
+            throw new IllegalParamterException("additionalServiceParam.getUseTime is not  null or <=0");
         }
         //TODO  校验继续
     }
