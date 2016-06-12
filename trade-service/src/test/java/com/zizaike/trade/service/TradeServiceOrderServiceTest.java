@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
 import com.alibaba.fastjson.JSON;
+import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
@@ -48,8 +49,8 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         param.setMobile("18521002422");
         param.setRemark("测试");
         param.setWechat("zeuskingzb");
-        Map map = tradeServiceOrderService.createTradeServiceOrder(param);
-        System.err.println(map.get("data"));
+        ResponseResult responseResult = tradeServiceOrderService.createTradeServiceOrder(param);
+        System.err.println(JSON.toJSON(responseResult));
     }
     @Test(description = "批量创建订单")
     public void createTradeServiceBatchOrder() throws ZZKServiceException {
@@ -77,9 +78,9 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         param.setRemark("测试");
         param.setWechat("zeuskingzb");
         System.err.println(JSON.toJSON(param));
-        List<Map<String, Object>> returnLists = tradeServiceOrderService.createTradeServiceBatchOrder(param);
-        for (Map<String, Object> map : returnLists) {
-            System.err.println(JSON.toJSON(map));
+        List<ResponseResult> returnLists = tradeServiceOrderService.createTradeServiceBatchOrder(param);
+        for (ResponseResult responseResult : returnLists) {
+            System.err.println(JSON.toJSON(responseResult));
         }
     }
 }

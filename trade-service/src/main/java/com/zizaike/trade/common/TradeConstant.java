@@ -20,6 +20,6 @@ package com.zizaike.trade.common;
  * @see
  */
 public class TradeConstant {
-    public static final String DATA = "data";
+    public static final String INFO = "info";
     public static final String TOTAL_AMOUNT = "totalAmount";
 }

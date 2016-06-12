@@ -17,6 +17,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.common.page.Page;
 import com.zizaike.core.common.page.PageList;
 import com.zizaike.core.framework.exception.ZZKServiceException;
@@ -44,18 +45,19 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     @Autowired
     private TradeServiceOrderDao tradeServiceOrderDao;
     @Override
-    public Map<String, Object> createTradeServiceOrder(TradeServiceOrderCreateParam param) {
-        Map<String, Object> resultMap = new HashMap<>();
+    public ResponseResult createTradeServiceOrder(TradeServiceOrderCreateParam param) {
+        ResponseResult responseResult = new ResponseResult();
         try {
-            resultMap = tradeServiceOrderCreateBizz.createServiceOrder(param);
+            responseResult = tradeServiceOrderCreateBizz.createServiceOrder(param);
         } catch (ZZKServiceException e) {
-            resultMap.put(e.getErrorCode().getErrorCode(), e.getErrorCode().getErrorMsg());
+            responseResult.setCode(e.getErrorCode().getErrorCode());
+            responseResult.setMessage(e.getErrorCode().getErrorMsg());
         }
-        return resultMap;
+        return responseResult;
     }
     @Override
-    public List<Map<String, Object>> createTradeServiceBatchOrder(TradeServiceBatchOrderCreateParam param) {
-        List<Map<String, Object>> returnList = new ArrayList<>();
+    public List<ResponseResult> createTradeServiceBatchOrder(TradeServiceBatchOrderCreateParam param) {
+        List<ResponseResult> returnList = new ArrayList<ResponseResult>();
         List<AdditionalServiceParam> additionalServiceParams = param.getServiceList();
         for (AdditionalServiceParam additionalServiceParam : additionalServiceParams) {
             TradeServiceOrderCreateParam tradeServiceOrderCreateParam = new TradeServiceOrderCreateParam();

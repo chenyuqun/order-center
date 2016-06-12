@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.common.util.AmountUtil;
 import com.zizaike.core.framework.exception.IllegalParamterException;
 import com.zizaike.core.framework.exception.ZZKServiceException;
@@ -69,8 +70,8 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
         //TODO  校验继续
     }
     @Override
-    public Map<String,Object> createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException {
-          
+    public ResponseResult  createServiceOrder(TradeServiceOrderCreateParam param) throws ZZKServiceException {
+        ResponseResult responseResult = new ResponseResult();
         // 参数校验
         // validateTradeServiceOrderCreateParam(param);
          //TODO 校验库存
@@ -113,8 +114,8 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
          tradeServiceOrder.setUpdateAt(new Date());
          tradeServiceOrder.setRemark(param.getRemark());
          tradeServiceOrderDao.createTradeServiceOrder(tradeServiceOrder);
-         resultMap.put(TradeConstant.DATA, tradeServiceOrderDao.queryByOrderNo(orderNo));
-          return resultMap;
+         responseResult.setInfo(tradeServiceOrderDao.queryByOrderNo(orderNo));
+          return responseResult;
     }
 
 }
