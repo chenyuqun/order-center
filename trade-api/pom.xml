@@ -14,7 +14,7 @@
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 		<excludePropertyFiles></excludePropertyFiles>
-		<project.build.finalname>trade-service</project.build.finalname>
+		<project.build.finalname>trade-api</project.build.finalname>
 		
 		<zizaike.core.version>1.0.10-SNAPSHOT</zizaike.core.version>
 		<zizaike.entity.version>1.0.20-SNAPSHOT</zizaike.entity.version>
