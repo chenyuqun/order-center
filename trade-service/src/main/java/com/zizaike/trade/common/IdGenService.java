@@ -25,7 +25,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class IdGenService {
     @Value("${idGenService.workerId}")
-    private  long workerId;
+    private  String workerId;
     private final static long twepoch = 1361753741828L;
     private long sequence = 0L;
     private final static long workerIdBits = 4L;
@@ -39,7 +39,7 @@ public class IdGenService {
     public IdGenService() {
     }
     public IdGenService(final long workerId) {
-        this.workerId = workerId;
+        this.workerId = String.valueOf(workerId);
     }
 
     /**
@@ -64,7 +64,7 @@ public class IdGenService {
             nextId = 0L;
         } else {
             this.lastTimestamp = timestamp;
-            nextId = ((timestamp - twepoch << timestampLeftShift)) | (this.workerId << this.workerIdShift)
+            nextId = ((timestamp - twepoch << timestampLeftShift)) | (Long.parseLong(this.workerId) << this.workerIdShift)
                     | (this.sequence);
         }
 

@@ -5,14 +5,13 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans          
     http://www.springframework.org/schema/beans/spring-beans.xsd          
     http://code.alibabatech.com/schema/dubbo          
-    http://code.alibabatech.com/schema/dubbo/dubbo.xsd"> 
-   <dubbo:application name="${dubbo.applicationName}"  />
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">  
+    <dubbo:application name="${dubbo.applicationName}"  />
    <dubbo:registry address="${dubbo.address}"  file="${dubbo.applicationName}/dubbo.cache"/>  
    <dubbo:protocol host="${dubbo.host}" name="dubbo" port="${dubbo.port}" />
     <!-- 配置超时时间 -->
    <dubbo:consumer timeout="${dubbo.timeout}"/>
    <dubbo:monitor protocol="registry"/>
-     
     <!-- 特色服务 -->
     <dubbo:reference id="additionalServiceService" interface="com.zizaike.is.commodity.AdditionalServiceService" version="1.0.0" group="${dubbo.group}"  check="false"/>
     <!-- 国家汇率服务 -->

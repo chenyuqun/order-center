@@ -7,12 +7,6 @@
     http://code.alibabatech.com/schema/dubbo
     http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
    
-   <dubbo:application name="${dubbo.applicationName}"  />
-   <dubbo:registry address="${dubbo.address}"  file="${dubbo.applicationName}/dubbo.cache"/>  
-   <dubbo:protocol host="${dubbo.host}" name="dubbo" port="${dubbo.port}" />
-    <!-- 配置超时时间 -->
-   <dubbo:consumer timeout="${dubbo.timeout}"/>
-   <dubbo:monitor protocol="registry"/>
     <!-- 交易服务订单 -->
    <dubbo:service interface="com.zizaike.is.trade.TradeServiceOrderService" version="1.0.0" ref="tradeServiceOrderService"  group="${dubbo.group}" />  
 	<bean id="tradeServiceOrderService" class="com.zizaike.trade.service.impl.TradeServiceOrderServiceImpl" />

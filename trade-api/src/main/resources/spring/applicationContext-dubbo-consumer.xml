@@ -12,6 +12,6 @@
     <!-- 配置超时时间 -->
    <dubbo:consumer timeout="${dubbo.timeout}"/>
    <dubbo:monitor protocol="registry"/>
-    <!-- 特色服务 -->
-    <dubbo:reference id="additionalServiceService" interface="com.zizaike.is.commodity.AdditionalServiceService" version="1.0.0" group="${dubbo.group}"  check="false"/>
+    <!-- 服务订单服务-->
+    <dubbo:reference id="tradeServiceOrderService" interface="com.zizaike.is.trade.TradeServiceOrderService" version="1.0.0" group="${dubbo.group}"  check="false"/>
 </beans>
