@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.trade.basetest.BaseTest;
-import com.zizaike.trade.common.OrderNoGenUnit;
+import com.zizaike.trade.common.TradeGenUnit;
 
 /**
  * 
@@ -25,7 +25,7 @@ import com.zizaike.trade.common.OrderNoGenUnit;
  */
 public class OrderNoGenUnitTest extends BaseTest {
     @Autowired
-    private OrderNoGenUnit orderNoGenUnit;
+    private TradeGenUnit orderNoGenUnit;
     @Test(description = "得到订单号")
     public void genOrderId() throws ZZKServiceException {
         System.err.println(orderNoGenUnit.genOrderId(null));
@@ -34,7 +34,7 @@ public class OrderNoGenUnitTest extends BaseTest {
     }
     @Test(description = "支付订单号")
     public void genPayOrderNo() throws ZZKServiceException {
-        System.err.println(orderNoGenUnit.genPayOrderNo());
+        System.err.println(orderNoGenUnit.genOutPayNo());
 //        Map<String,String> map1 = new HashMap<String,String>();
 //        for (int i = 0; i < 2000000; i++) {
 //            map1.put(orderNoGenUnit.genPayOrderNo(), orderNoGenUnit.genPayOrderNo());

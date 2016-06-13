@@ -14,12 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.entity.trade.param.TradeServicePayCreateParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 
 
@@ -39,13 +41,21 @@ public class TradePayController extends BaseAjaxController{
     protected  Logger LOG = LoggerFactory.getLogger(TradePayController.class);
     @Autowired
     TradeServiceOrderService tradeServiceOrderService;
-    @RequestMapping(value = "outPayNo",method= RequestMethod.GET)
+    /**
+     * 
+     * mergePay:合并支付. <br/>  
+     *  
+     * @author snow.zhang  
+     * @param param
+     * @return
+     * @throws ZZKServiceException  
+     * @since JDK 1.7
+     */
+    @RequestMapping(value = "mergePay",method= RequestMethod.POST)
     @ResponseBody
-    public ResponseResult getOutPayNO() throws ZZKServiceException {
+    public ResponseResult mergePay(@RequestBody TradeServicePayCreateParam param) throws ZZKServiceException {
         ResponseResult responseResult = new ResponseResult();
-        String outPayNo = tradeServiceOrderService.getOutPayNo();
-        LOG.info("getOutPayNO outPayNO:{}",outPayNo);
-        responseResult.setInfo(outPayNo);
+        responseResult.setInfo(tradeServiceOrderService.pay(param));
         return responseResult;
     }
 }

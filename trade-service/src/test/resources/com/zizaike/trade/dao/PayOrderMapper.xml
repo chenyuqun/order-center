@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zizaike.dao.trade.PayOrderMapper" >
+<mapper namespace="com.zizaike.trade.dao.PayOrderMapper" >
   <resultMap id="BaseResultMap" type="com.zizaike.entity.trade.PayOrder" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="out_pay_no" property="outPayNo" jdbcType="VARCHAR" />
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
-    <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+    <result column="order_type" property="orderType" typeHandler="com.zizaike.trade.dao.handler.OrderTypeHandler"/>
     <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
     <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -27,7 +27,8 @@
       order_type, create_at, update_at
       )
     values (#{id,jdbcType=INTEGER}, #{outPayNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
-      #{orderType,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP}
+      #{orderType,typeHandler=com.zizaike.trade.dao.handler.OrderTypeHandler ,javaType=com.zizaike.entity.trade.OrderType},
+      #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zizaike.entity.trade.PayOrder" >
@@ -63,7 +64,7 @@
         #{orderNo,jdbcType=VARCHAR},
       </if>
       <if test="orderType != null" >
-        #{orderType,jdbcType=VARCHAR},
+       #{orderType,typeHandler=com.zizaike.trade.dao.handler.OrderTypeHandler ,javaType=com.zizaike.entity.trade.OrderType},
       </if>
       <if test="createAt != null" >
         #{createAt,jdbcType=TIMESTAMP},
@@ -83,7 +84,7 @@
         order_no = #{orderNo,jdbcType=VARCHAR},
       </if>
       <if test="orderType != null" >
-        order_type = #{orderType,jdbcType=VARCHAR},
+        order_type = #{orderType,typeHandler=com.zizaike.trade.dao.handler.OrderTypeHandler ,javaType=com.zizaike.entity.trade.OrderType},
       </if>
       <if test="createAt != null" >
         create_at = #{createAt,jdbcType=TIMESTAMP},
@@ -98,7 +99,7 @@
     update t_pay_order
     set out_pay_no = #{outPayNo,jdbcType=VARCHAR},
       order_no = #{orderNo,jdbcType=VARCHAR},
-      order_type = #{orderType,jdbcType=VARCHAR},
+      order_type = #{orderType,typeHandler=com.zizaike.trade.dao.handler.OrderTypeHandler ,javaType=com.zizaike.entity.trade.OrderType},
       create_at = #{createAt,jdbcType=TIMESTAMP},
       update_at = #{updateAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

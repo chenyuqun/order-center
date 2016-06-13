@@ -9,8 +9,6 @@
 
 package com.zizaike.trade.dao.impl;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.zizaike.core.framework.mybatis.impl.GenericMyIbatisDao;
@@ -40,10 +38,6 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
         this.getSqlSession().insert(NAMESPACE + "insertSelective", tradeServiceOrder);
     }
 
-    @Override
-    public void saveBatch(List<TradeServiceOrder> tradeServiceOrders) {
-        this.getSqlSession().insert(NAMESPACE + "insertBatch", tradeServiceOrders);
-    }
 
     @Override
     public void updateTradeServiceOrder(TradeServiceOrder tradeServiceOrder) {

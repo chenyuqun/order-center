@@ -9,8 +9,6 @@
   
 package com.zizaike.trade.dao;  
 
-import java.util.List;
-
 import com.zizaike.core.framework.springext.database.Master;
 import com.zizaike.entity.trade.TradeServiceOrder;
 
@@ -35,17 +33,6 @@ public interface TradeServiceOrderDao {
      */
     @Master
     void createTradeServiceOrder(TradeServiceOrder tradeServiceOrder);
-    /**
-     * 
-     * saveBatch:批量生成服务订单. <br/>  
-     *  
-     * @author snow.zhang  
-     * @param tradeServiceOrders
-     * @return  
-     * @since JDK 1.7
-     */
-    @Master
-    void saveBatch(List<TradeServiceOrder> tradeServiceOrders);
     /**
      * 
      * updateTradeServiceOrder:更新服务订单. <br/>  

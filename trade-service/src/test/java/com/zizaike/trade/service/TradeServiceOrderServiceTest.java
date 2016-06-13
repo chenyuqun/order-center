@@ -4,9 +4,11 @@ package com.zizaike.trade.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.alibaba.fastjson.JSON;
@@ -15,6 +17,7 @@ import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
+import com.zizaike.entity.trade.param.TradeServicePayCreateParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 import com.zizaike.trade.basetest.BaseTest;
 
@@ -28,6 +31,8 @@ import com.zizaike.trade.basetest.BaseTest;
  * @version   
  * @since JDK 1.7
  */
+@Transactional
+@TransactionConfiguration(defaultRollback = true)
 public class TradeServiceOrderServiceTest extends BaseTest {
     @Autowired
     private TradeServiceOrderService tradeServiceOrderService;
@@ -82,5 +87,16 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         for (ResponseResult responseResult : returnLists) {
             System.err.println(JSON.toJSON(responseResult));
         }
+    }
+    @Test(description = "支付")
+    public void pay() throws ZZKServiceException {
+        TradeServicePayCreateParam param = new TradeServicePayCreateParam();
+        param.setIp("127.0.0.1");
+        List<String> list = new ArrayList<String>();
+        list.add("S061344291584205304");
+        list.add("S061326290944205410");
+        param.setOrderNos(list);
+        String outPayNo = tradeServiceOrderService.pay(param);
+        Assert.assertNotNull(outPayNo);
     }
 }

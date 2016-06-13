@@ -29,7 +29,7 @@ import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
 import com.zizaike.is.commodity.AdditionalServiceService;
 import com.zizaike.is.recommend.DestConfigService;
 import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
-import com.zizaike.trade.common.OrderNoGenUnit;
+import com.zizaike.trade.common.TradeGenUnit;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
 
 /**  
@@ -48,7 +48,7 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
     @Autowired
     AdditionalServiceService additionalServiceService;
     @Autowired
-    OrderNoGenUnit orderNoGenUnit;
+    TradeGenUnit tradeGenUnit;
     @Autowired
     DestConfigService destConfigService;
     public void validateTradeServiceOrderCreateParam(TradeServiceOrderCreateParam param) throws IllegalParamterException{
@@ -108,7 +108,7 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
          }
          //特色服务列表
          TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
-         String orderNo = orderNoGenUnit.genServiceOrderId();
+         String orderNo = tradeGenUnit.genServiceOrderId();
          tradeServiceOrder.setOrderNo(orderNo);
          tradeServiceOrder.setUnitId(additionalService.getId()+"");
          tradeServiceOrder.setAdditionalServiceType(additionalService.getAdditionalServiceType());

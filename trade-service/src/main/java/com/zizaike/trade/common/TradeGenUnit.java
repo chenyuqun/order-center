@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.zizaike.core.framework.exception.trade.OrderNOCreateException;
-import com.zizaike.core.framework.exception.trade.OutPayNOCreateException;
+import com.zizaike.core.framework.exception.trade.OrderNotCreateException;
+import com.zizaike.core.framework.exception.trade.OutPayNotCreateException;
 
 /**
  * 
  * ClassName: OrderNoGenUnit <br/>  
- * Reason: 订单号生成单元. <br/>  
+ * Reason: 交易生成. <br/>  
  * date: 2016年6月2日 下午4:45:16 <br/>  
  *  
  * @author 订单生成服务  
@@ -23,14 +23,14 @@ import com.zizaike.core.framework.exception.trade.OutPayNOCreateException;
  * @since JDK 1.7
  */
 @Repository
-public class OrderNoGenUnit {
+public class TradeGenUnit {
 
-    private Logger logger = LoggerFactory.getLogger(OrderNoGenUnit.class);
+    private Logger logger = LoggerFactory.getLogger(TradeGenUnit.class);
 
     @Autowired
     private IdGenService idGenService;
 
-    public String genOrderId(String preFix) throws OrderNOCreateException {
+    public String genOrderId(String preFix) throws OrderNotCreateException {
         try {
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("MMdd");
@@ -46,7 +46,7 @@ public class OrderNoGenUnit {
         } catch (Exception e) {
             logger.error("订单号生成出错 e={}", e.getMessage(), e);
             e.printStackTrace();
-            throw new OrderNOCreateException();
+            throw new OrderNotCreateException();
         }
     }
     /**
@@ -55,14 +55,14 @@ public class OrderNoGenUnit {
      *  
      * @author snow.zhang
      * @return
-     * @throws OrderNOCreateException  
+     * @throws OrderNotCreateException  
      * @since JDK 1.7
      */
-    public String genServiceOrderId() throws OrderNOCreateException {
+    public String genServiceOrderId() throws OrderNotCreateException {
        return  genOrderId("S");
     }
-    public String genPayOrderNo() throws OutPayNOCreateException {
-        return  genPayOrderNo("PAY");
+    public String genOutPayNo() throws OutPayNotCreateException {
+        return  genOutPayNo("PAY");
     }
     /**
      * 
@@ -71,10 +71,10 @@ public class OrderNoGenUnit {
      * @author snow.zhang
      * @param preFix
      * @return
-     * @throws OutPayNOCreateException  
+     * @throws OutPayNotCreateException  
      * @since JDK 1.7
      */
-    public String genPayOrderNo(String preFix) throws OutPayNOCreateException {
+    public String genOutPayNo(String preFix) throws OutPayNotCreateException {
         try {
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("MMdd");
@@ -90,7 +90,7 @@ public class OrderNoGenUnit {
         } catch (Exception e) {
             logger.error("对外支付号生成出错 e={}", e.getMessage(), e);
             e.printStackTrace();
-            throw new OutPayNOCreateException();
+            throw new OutPayNotCreateException();
         }
     }
 }

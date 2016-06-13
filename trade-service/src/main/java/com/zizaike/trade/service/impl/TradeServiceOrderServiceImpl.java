@@ -20,15 +20,15 @@ import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.common.page.Page;
 import com.zizaike.core.common.page.PageList;
 import com.zizaike.core.framework.exception.ZZKServiceException;
-import com.zizaike.core.framework.exception.trade.OrderNOCreateException;
-import com.zizaike.core.framework.exception.trade.OutPayNOCreateException;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
+import com.zizaike.entity.trade.param.TradeServicePayCreateParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
-import com.zizaike.trade.common.OrderNoGenUnit;
+import com.zizaike.trade.bizz.TradeServiceOrderPayBizz;
+import com.zizaike.trade.common.TradeGenUnit;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
 
 /**  
@@ -45,9 +45,11 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     @Autowired
     private TradeServiceOrderCreateBizz tradeServiceOrderCreateBizz;
     @Autowired
+    private TradeServiceOrderPayBizz tradeServiceOrderPayBizz;
+    @Autowired
     private TradeServiceOrderDao tradeServiceOrderDao;
     @Autowired
-    private OrderNoGenUnit orderNoGenUnit;
+    private TradeGenUnit orderNoGenUnit;
     @Override
     public ResponseResult createTradeServiceOrder(TradeServiceOrderCreateParam param) {
         ResponseResult responseResult = new ResponseResult();
@@ -132,8 +134,8 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
         return null;
     }
     @Override
-    public String getOutPayNo() throws OutPayNOCreateException {
-        return orderNoGenUnit.genPayOrderNo();
+    public String pay(TradeServicePayCreateParam param) throws ZZKServiceException {
+        return tradeServiceOrderPayBizz.pay(param);
     }
 
 
