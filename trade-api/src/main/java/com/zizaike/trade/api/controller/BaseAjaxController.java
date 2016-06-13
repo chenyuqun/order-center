@@ -57,6 +57,7 @@ public abstract class BaseAjaxController {
         }
 
         try {
+            response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(jsonpBuilder(callback, resultBean));
         } catch (IOException e) {
             log.error("IOException ", e);

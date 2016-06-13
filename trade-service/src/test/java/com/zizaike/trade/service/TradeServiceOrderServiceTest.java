@@ -96,6 +96,7 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         list.add("S061344291584205304");
         list.add("S061326290944205410");
         param.setOrderNos(list);
+        System.err.println(JSON.toJSON(param));
         String outPayNo = tradeServiceOrderService.pay(param);
         Assert.assertNotNull(outPayNo);
     }
