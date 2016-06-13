@@ -14,14 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.framework.exception.ZZKServiceException;
-import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 
 
@@ -36,17 +34,18 @@ import com.zizaike.is.trade.TradeServiceOrderService;
  * @since JDK 1.7
  */
 @Controller
-@RequestMapping("/trade/service")
-public class TranslationController extends BaseAjaxController{
-    protected  Logger LOG = LoggerFactory.getLogger(TranslationController.class);
+@RequestMapping("/trade/pay")
+public class TradePayController extends BaseAjaxController{
+    protected  Logger LOG = LoggerFactory.getLogger(TradePayController.class);
     @Autowired
     TradeServiceOrderService tradeServiceOrderService;
-    @RequestMapping(value = "booking",method= RequestMethod.POST)
+    @RequestMapping(value = "outPayNo",method= RequestMethod.GET)
     @ResponseBody
-    public ResponseResult booking(@RequestBody TradeServiceBatchOrderCreateParam param ) throws ZZKServiceException {
-       LOG.debug("request param{}",param);
+    public ResponseResult getOutPayNO() throws ZZKServiceException {
         ResponseResult responseResult = new ResponseResult();
-        responseResult.setInfo(tradeServiceOrderService.createTradeServiceBatchOrder(param));
+        String outPayNo = tradeServiceOrderService.getOutPayNo();
+        LOG.info("getOutPayNO outPayNO:{}",outPayNo);
+        responseResult.setInfo(outPayNo);
         return responseResult;
     }
 }

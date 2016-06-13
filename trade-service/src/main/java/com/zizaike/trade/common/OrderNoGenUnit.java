@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.zizaike.core.framework.exception.trade.OrderNOCreateException;
+import com.zizaike.core.framework.exception.trade.OutPayNOCreateException;
 
 /**
  * 
@@ -52,12 +53,44 @@ public class OrderNoGenUnit {
      * 
      * genServiceOrderId:生成服务订单. <br/>  
      *  
-     * @author snow.zhang  
+     * @author snow.zhang
      * @return
      * @throws OrderNOCreateException  
      * @since JDK 1.7
      */
     public String genServiceOrderId() throws OrderNOCreateException {
        return  genOrderId("S");
+    }
+    public String genPayOrderNo() throws OutPayNOCreateException {
+        return  genPayOrderNo("PAY");
+    }
+    /**
+     * 
+     * genPayOrderNo:生成支付唯一号. <br/>  
+     *  
+     * @author snow.zhang
+     * @param preFix
+     * @return
+     * @throws OutPayNOCreateException  
+     * @since JDK 1.7
+     */
+    public String genPayOrderNo(String preFix) throws OutPayNOCreateException {
+        try {
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("MMdd");
+            String mmdd = formatter.format(date);
+            formatter = new SimpleDateFormat("HHmmss");
+            String hhmm = formatter.format(date);
+            if (StringUtils.isBlank(preFix)) {
+                return new StringBuilder(mmdd).append(idGenService.nextId(8)).append(hhmm).toString();
+            } else {
+                return new StringBuilder(preFix).append(mmdd).append(idGenService.nextId(10)).append(hhmm).toString();
+            }
+
+        } catch (Exception e) {
+            logger.error("对外支付号生成出错 e={}", e.getMessage(), e);
+            e.printStackTrace();
+            throw new OutPayNOCreateException();
+        }
     }
 }

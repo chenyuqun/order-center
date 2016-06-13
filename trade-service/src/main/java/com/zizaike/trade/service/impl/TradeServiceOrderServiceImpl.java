@@ -10,7 +10,6 @@
 package com.zizaike.trade.service.impl;  
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +20,15 @@ import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.common.page.Page;
 import com.zizaike.core.common.page.PageList;
 import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.core.framework.exception.trade.OrderNOCreateException;
+import com.zizaike.core.framework.exception.trade.OutPayNOCreateException;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
+import com.zizaike.trade.common.OrderNoGenUnit;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
 
 /**  
@@ -44,6 +46,8 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     private TradeServiceOrderCreateBizz tradeServiceOrderCreateBizz;
     @Autowired
     private TradeServiceOrderDao tradeServiceOrderDao;
+    @Autowired
+    private OrderNoGenUnit orderNoGenUnit;
     @Override
     public ResponseResult createTradeServiceOrder(TradeServiceOrderCreateParam param) {
         ResponseResult responseResult = new ResponseResult();
@@ -126,6 +130,10 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
 
         // TODO Auto-generated method stub  
         return null;
+    }
+    @Override
+    public String getOutPayNo() throws OutPayNOCreateException {
+        return orderNoGenUnit.genPayOrderNo();
     }
 
 
