@@ -8,7 +8,7 @@
     <result column="pay_no" property="payNo" jdbcType="VARCHAR" />
     <result column="pay_account" property="payAccount" jdbcType="VARCHAR" />
     <result column="pay_source" property="paySource" jdbcType="VARCHAR" />
-    <result column="pay_status" property="payStatus" jdbcType="VARCHAR" />
+    <result column="pay_status" property="payStatus" typeHandler="com.zizaike.trade.dao.handler.PayStatusHandler"  />
     <result column="callback_time" property="callbackTime" jdbcType="TIMESTAMP" />
     <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
     <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
@@ -34,7 +34,8 @@
       update_at)
     values (#{id,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{outPayNo,jdbcType=VARCHAR}, 
       #{payNo,jdbcType=VARCHAR}, #{payAccount,jdbcType=VARCHAR}, #{paySource,jdbcType=VARCHAR}, 
-      #{payStatus,jdbcType=VARCHAR}, #{callbackTime,jdbcType=TIMESTAMP}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{payStatus,typeHandler=com.zizaike.trade.dao.handler.PayStatusHandler ,javaType=com.zizaike.entity.trade.PayStatus},
+      #{callbackTime,jdbcType=TIMESTAMP}, #{createAt,jdbcType=TIMESTAMP}, 
       #{updateAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zizaike.entity.trade.Pay" >
@@ -91,7 +92,7 @@
         #{paySource,jdbcType=VARCHAR},
       </if>
       <if test="payStatus != null" >
-        #{payStatus,jdbcType=VARCHAR},
+        #{payStatus,typeHandler=com.zizaike.trade.dao.handler.PayStatusHandler ,javaType=com.zizaike.entity.trade.PayStatus},
       </if>
       <if test="callbackTime != null" >
         #{callbackTime,jdbcType=TIMESTAMP},
@@ -123,7 +124,7 @@
         pay_source = #{paySource,jdbcType=VARCHAR},
       </if>
       <if test="payStatus != null" >
-        pay_status = #{payStatus,jdbcType=VARCHAR},
+        pay_status = #{payStatus,typeHandler=com.zizaike.trade.dao.handler.PayStatusHandler ,javaType=com.zizaike.entity.trade.PayStatus},
       </if>
       <if test="callbackTime != null" >
         callback_time = #{callbackTime,jdbcType=TIMESTAMP},
@@ -144,7 +145,7 @@
       pay_no = #{payNo,jdbcType=VARCHAR},
       pay_account = #{payAccount,jdbcType=VARCHAR},
       pay_source = #{paySource,jdbcType=VARCHAR},
-      pay_status = #{payStatus,jdbcType=VARCHAR},
+      pay_status = #{payStatus,typeHandler=com.zizaike.trade.dao.handler.PayStatusHandler ,javaType=com.zizaike.entity.trade.PayStatus},
       callback_time = #{callbackTime,jdbcType=TIMESTAMP},
       create_at = #{createAt,jdbcType=TIMESTAMP},
       update_at = #{updateAt,jdbcType=TIMESTAMP}
