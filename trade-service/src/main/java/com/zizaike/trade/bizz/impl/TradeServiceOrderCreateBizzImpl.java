@@ -21,6 +21,7 @@ import com.zizaike.core.framework.exception.IllegalParamterException;
 import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.core.framework.exception.trade.ServiceNotExistException;
 import com.zizaike.entity.commodity.AdditionalService;
+import com.zizaike.entity.common.Country;
 import com.zizaike.entity.recommend.DestConfig;
 import com.zizaike.entity.trade.OrderStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
@@ -67,14 +68,18 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
         if(StringUtils.isEmpty(param.getIp())){
             throw new IllegalParamterException("ip is not null");
         }
-        if(StringUtils.isEmpty(param.getFirstName())){
-            throw new IllegalParamterException("first name is not null");
-        }
-        if(StringUtils.isEmpty(param.getLastName())){
-            throw new IllegalParamterException("last name is not null");
-        }
+       
         if(param.getCustomerDestId()==null || param.getCustomerDestId()!=0){
             throw new IllegalParamterException("customerDestId is not null");
+        }
+        //非中国需要填写
+        if(param.getCustomerDestId()!=Country.ZH.getValue() && param.getCustomerDestId()!=Country.HK.getValue()&& param.getCustomerDestId()!=Country.TAIWAN.getValue()){
+            if(StringUtils.isEmpty(param.getFirstName())){
+                throw new IllegalParamterException("first name is not null");
+            }
+            if(StringUtils.isEmpty(param.getLastName())){
+                throw new IllegalParamterException("last name is not null");
+            }
         }
         if(param.getAdditionalServiceParam()==null){
             throw new IllegalParamterException("additionalServiceParam is not null");
