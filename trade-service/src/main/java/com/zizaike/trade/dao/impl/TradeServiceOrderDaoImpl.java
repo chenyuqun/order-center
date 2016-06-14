@@ -10,6 +10,8 @@
 package com.zizaike.trade.dao.impl;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -70,6 +72,16 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
         tradeServiceOrder.setOrderNo(orderNo);
         tradeServiceOrder.setOrderStatus(orderStatus);
         return this.getSqlSession().selectOne(NAMESPACE + "queryOrderNoAndOrderStatus", tradeServiceOrder);
+    }
+
+
+
+    @Override
+    public List<TradeServiceOrder> queryCustomerIdAndOrderStatus(Integer customerId, OrderStatus orderStatus) {
+        TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
+        tradeServiceOrder.setCustomerId(customerId);
+        tradeServiceOrder.setOrderStatus(orderStatus);
+        return this.getSqlSession().selectList(NAMESPACE + "queryCustomerIdAndOrderStatus", tradeServiceOrder);
     }
     
 

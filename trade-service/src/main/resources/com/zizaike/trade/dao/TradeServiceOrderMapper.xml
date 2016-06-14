@@ -5,6 +5,9 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="master_order_no" property="masterOrderNo" jdbcType="VARCHAR" />
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="business_id" property="businessId" jdbcType="INTEGER" />
+    <result column="channel" property="channel" typeHandler="com.zizaike.trade.dao.handler.ChannelTypeHandler" />
     <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
     <result column="unit_type" property="additionalServiceType" typeHandler="com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler" />
     <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
@@ -39,7 +42,7 @@
     <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, master_order_no, order_no, unit_id, unit_type, unit_name, guest_name, first_name, 
+    id, master_order_no, order_no,customer_id,business_id,channel, unit_id, unit_type, unit_name, guest_name, first_name, 
     last_name, mobile, email, wechat, remark, unit_price, unit_number, total_price, use_time, 
     business_dest_id, customer_dest_id, RMB_rate_business, RMB_rate_customer,customer_currency_code, ip, customer_province, 
     commission_rate, commission_amount, discount_amount, refund_amount, closed_reasons, 
@@ -57,6 +60,7 @@
   </delete>
   <insert id="insert" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
     insert into t_trade_service_order (id, master_order_no, order_no, 
+    customer_id,business_id,channel,
       unit_id, unit_type, unit_name, 
       guest_name, first_name, last_name, 
       mobile, email, wechat, 
@@ -69,7 +73,11 @@
       closed_reasons, order_type, order_status, 
       order_remarks, daochu_status, create_at, 
       update_at)
-    values (#{id,jdbcType=INTEGER}, #{masterOrderNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{masterOrderNo,jdbcType=VARCHAR}, 
+    #{orderNo,jdbcType=VARCHAR}, 
+    #{customerId,jdbcType=INTEGER}, 
+    #{businessId,jdbcType=INTEGER}, 
+    #{channel,typeHandler=com.zizaike.trade.dao.handler.ChannelTypeHandler ,javaType=com.zizaike.entity.trade.ChannelType},
       #{unitId,jdbcType=VARCHAR},
 	  #{additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
       #{unitName,jdbcType=VARCHAR}, 
@@ -98,6 +106,15 @@
       </if>
       <if test="orderNo != null" >
         order_no,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="channel != null" >
+        channel,
       </if>
       <if test="unitId != null" >
         unit_id,
@@ -206,6 +223,15 @@
       <if test="orderNo != null" >
         #{orderNo,jdbcType=VARCHAR},
       </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null" >
+        #{channel,typeHandler=com.zizaike.trade.dao.handler.ChannelTypeHandler ,javaType=com.zizaike.entity.trade.ChannelType},
+      </if>
       <if test="unitId != null" >
         #{unitId,jdbcType=VARCHAR},
       </if>
@@ -313,6 +339,15 @@
       <if test="orderNo != null" >
         order_no = #{orderNo,jdbcType=VARCHAR},
       </if>
+      <if test="customerId != null" >
+        customer_id=#{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="businessId != null" >
+       business_id=#{businessId,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null" >
+        channel=#{channel,typeHandler=com.zizaike.trade.dao.handler.ChannelTypeHandler ,javaType=com.zizaike.entity.trade.ChannelType},
+      </if>
       <if test="unitId != null" >
         unit_id = #{unitId,jdbcType=VARCHAR},
       </if>
@@ -416,6 +451,9 @@
     update t_trade_service_order
     set master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
       order_no = #{orderNo,jdbcType=VARCHAR},
+        customer_id=#{customerId,jdbcType=INTEGER},
+       business_id=#{businessId,jdbcType=INTEGER},
+        channel=#{channel,typeHandler=com.zizaike.trade.dao.handler.ChannelTypeHandler ,javaType=com.zizaike.entity.trade.ChannelType},
       unit_id = #{unitId,jdbcType=VARCHAR},
       unit_type = #{unitType,jdbcType=VARCHAR},
       unit_name = #{additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
@@ -455,6 +493,15 @@
     <set >
       <if test="unitId != null" >
         unit_id = #{unitId,jdbcType=VARCHAR},
+      </if>
+        <if test="customerId != null" >
+        customer_id=#{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="businessId != null" >
+       business_id=#{businessId,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null" >
+        channel=#{channel,typeHandler=com.zizaike.trade.dao.handler.ChannelTypeHandler ,javaType=com.zizaike.entity.trade.ChannelType},
       </if>
       <if test="additionalServiceType != null" >
         unit_type = #{additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
@@ -570,6 +617,9 @@
     values 
     <foreach collection="list" item="item" index="index" separator="," >  
      (#{item.masterOrderNo,jdbcType=VARCHAR}, #{item.orderNo,jdbcType=VARCHAR}, 
+      #{item.customerId,jdbcType=INTEGER}, 
+    #{item.businessId,jdbcType=INTEGER}, 
+    #{item.channel,typeHandler=com.zizaike.trade.dao.handler.ChannelTypeHandler ,javaType=com.zizaike.entity.trade.ChannelType},
       #{item.unitId,jdbcType=VARCHAR}, 
       #{item.additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
        #{item.unitName,jdbcType=VARCHAR}, 
@@ -600,14 +650,18 @@
     from t_trade_service_order
     where  order_no = #{orderNo,jdbcType=VARCHAR} and order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus}
   </select>
+  <select id="queryCustomerIdAndOrderStatus" resultMap="BaseResultMap" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_trade_service_order
+    where  customer_id = #{customerId,jdbcType=INTEGER} 
+     <if test="orderStatus != null" >
+       and  order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus}
+      </if>
+  </select>
   
    <update id="updateTradeServiceOrderPaySuccess" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
     update t_trade_service_order
-    <set >
-      <if test="orderStatus != null" >
-        order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
-      </if>
-    </set>
     where order_no = #{orderNo,jdbcType=VARCHAR}
   </update>
   

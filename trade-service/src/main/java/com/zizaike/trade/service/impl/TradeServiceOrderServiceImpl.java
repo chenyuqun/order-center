@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.common.page.Page;
 import com.zizaike.core.common.page.PageList;
+import com.zizaike.core.framework.exception.IllegalParamterException;
 import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.entity.trade.OrderStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
@@ -82,6 +84,9 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
             tradeServiceOrderCreateParam.setMobile(param.getMobile());
             tradeServiceOrderCreateParam.setRemark(param.getRemark());
             tradeServiceOrderCreateParam.setWechat(param.getWechat());
+            tradeServiceOrderCreateParam.setCustomerId(param.getCustomerId());
+            tradeServiceOrderCreateParam.setBusinessId(param.getBusinessId());
+            tradeServiceOrderCreateParam.setChannel(param.getChannel());
             returnList.add(createTradeServiceOrder(tradeServiceOrderCreateParam));
         }
         return returnList;
@@ -138,6 +143,20 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     @Override
     public String pay(TradeServiceOrderPayParam param) throws ZZKServiceException {
         return tradeServiceOrderPayBizz.pay(param);
+    }
+    @Override
+    public List<TradeServiceOrder> queryCustomerIdAndOrderStatus(Integer customerId, OrderStatus orderStatus) throws ZZKServiceException {
+          
+       if(customerId==null || customerId<=0){
+           throw new IllegalParamterException("customerId is not null or <=0");
+       }
+       if(orderStatus==null){
+           throw new IllegalParamterException("orderStatus is not null or <=0");
+       }
+       if(orderStatus==OrderStatus.ALL){
+           orderStatus= null;
+       }
+        return tradeServiceOrderDao.queryCustomerIdAndOrderStatus(customerId, orderStatus);
     }
 
 

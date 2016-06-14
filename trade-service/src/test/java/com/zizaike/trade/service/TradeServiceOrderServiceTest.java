@@ -14,6 +14,8 @@ import org.testng.annotations.Test;
 import com.alibaba.fastjson.JSON;
 import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.entity.trade.ChannelType;
+import com.zizaike.entity.trade.OrderStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
@@ -47,6 +49,9 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         additionalServiceParam.setUseTime(new Date());
         param.setAdditionalServiceParam(additionalServiceParam);
         param.setCustomerDestId(12);
+        param.setCustomerId(1234);
+        param.setBusinessId(123);
+        param.setChannel(ChannelType.IOS);
         param.setCustomerProvince("江苏");
         param.setEmail("493455221@qq.com");
         param.setFirstName("bin");
@@ -75,6 +80,9 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         list.add(additionalServiceParam1);
         param.setServiceList(list);
         param.setCustomerDestId(12);
+        param.setCustomerId(1234);
+        param.setBusinessId(123);
+        param.setChannel(ChannelType.IOS);
         param.setCustomerProvince("江苏");
         param.setEmail("493455221@qq.com");
         param.setFirstName("bin");
@@ -112,5 +120,10 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         System.err.println(JSON.toJSON(param));
 //        List<TradeServiceOrder> list= tradeServiceOrderService.processOrderNotify(param);
 //        Assert.assertNotEquals(list.size(), 0);
+    }
+    @Test(description = "用户查询服务")
+    public void queryCustomerIdAndOrderStatus() throws ZZKServiceException {
+        List<TradeServiceOrder> list = tradeServiceOrderService.queryCustomerIdAndOrderStatus(1234, OrderStatus.CREATE);
+        Assert.assertNotNull(list);
     }
 }
