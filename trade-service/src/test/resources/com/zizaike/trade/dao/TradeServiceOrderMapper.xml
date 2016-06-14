@@ -450,7 +450,108 @@
       update_at = #{updateAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
+   <update id="updateByOrderNoSelective" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    update t_trade_service_order
+    <set >
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="additionalServiceType != null" >
+        unit_type = #{additionalServiceType,typeHandler=com.zizaike.trade.dao.handler.AdditionalServiceTypeHandler ,javaType=com.zizaike.entity.commodity.AdditionalServiceType},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="guestName != null" >
+        guest_name = #{guestName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null" >
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null" >
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="unitNumber != null" >
+        unit_number = #{unitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null" >
+        use_time = #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessDestId != null" >
+        business_dest_id = #{businessDestId,jdbcType=INTEGER},
+      </if>
+      <if test="customerDestId != null" >
+        customer_dest_id = #{customerDestId,jdbcType=INTEGER},
+      </if>
+      <if test="rmbRateBusiness != null" >
+        RMB_rate_business = #{rmbRateBusiness,jdbcType=DOUBLE},
+      </if>
+      <if test="rmbRateCustomer != null" >
+        RMB_rate_customer = #{rmbRateCustomer,jdbcType=DOUBLE},
+      </if>
+      <if test="customerCurrencyCode != null" >
+        customer_currency_code = #{customerCurrencyCode,jdbcType=DOUBLE},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="customerProvince != null" >
+        customer_province = #{customerProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="commissionRate != null" >
+        commission_rate = #{commissionRate,jdbcType=INTEGER},
+      </if>
+      <if test="commissionAmount != null" >
+        commission_amount = #{commissionAmount,jdbcType=INTEGER},
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount = #{discountAmount,jdbcType=INTEGER},
+      </if>
+      <if test="refundAmount != null" >
+        refund_amount = #{refundAmount,jdbcType=INTEGER},
+      </if>
+      <if test="closedReasons != null" >
+        closed_reasons = #{closedReasons,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
+      </if>
+      <if test="orderRemarks != null" >
+        order_remarks = #{orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="daochuStatus != null" >
+        daochu_status = #{daochuStatus,jdbcType=BIT},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
   <insert id="insertBatch" useGeneratedKeys="true" parameterType="ArrayList" >
     insert into t_trade_service_order ( master_order_no, order_no, 
       unit_id, unit_type, unit_name, 
@@ -493,4 +594,21 @@
     from t_trade_service_order
     where  order_no = #{orderNo,jdbcType=VARCHAR}
   </select>
+  <select id="queryOrderNoAndOrderStatus" resultMap="BaseResultMap" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_trade_service_order
+    where  order_no = #{orderNo,jdbcType=VARCHAR} and order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus}
+  </select>
+  
+   <update id="updateTradeServiceOrderPaySuccess" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+    update t_trade_service_order
+    <set >
+      <if test="orderStatus != null" >
+        order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
+      </if>
+    </set>
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
+  
 </mapper>

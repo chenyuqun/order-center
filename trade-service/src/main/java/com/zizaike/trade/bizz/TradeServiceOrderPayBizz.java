@@ -10,7 +10,7 @@
 package com.zizaike.trade.bizz;  
 
 import com.zizaike.core.framework.exception.ZZKServiceException;
-import com.zizaike.entity.trade.param.TradeServicePayCreateParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderPayParam;
 
 
 /**  
@@ -33,6 +33,6 @@ public interface TradeServiceOrderPayBizz {
      * @throws ZZKServiceException
      * @since JDK 1.7
      */
-    public String pay(TradeServicePayCreateParam param) throws ZZKServiceException;
+    public String pay(TradeServiceOrderPayParam param) throws ZZKServiceException;
 }
   

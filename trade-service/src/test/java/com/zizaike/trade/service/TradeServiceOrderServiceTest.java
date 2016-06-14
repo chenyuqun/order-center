@@ -14,10 +14,12 @@ import org.testng.annotations.Test;
 import com.alibaba.fastjson.JSON;
 import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
-import com.zizaike.entity.trade.param.TradeServicePayCreateParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderNotifyParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderPayParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 import com.zizaike.trade.basetest.BaseTest;
 
@@ -90,7 +92,7 @@ public class TradeServiceOrderServiceTest extends BaseTest {
     }
     @Test(description = "支付")
     public void pay() throws ZZKServiceException {
-        TradeServicePayCreateParam param = new TradeServicePayCreateParam();
+        TradeServiceOrderPayParam param = new TradeServiceOrderPayParam();
         param.setIp("127.0.0.1");
         List<String> list = new ArrayList<String>();
         list.add("S061344291584205304");
@@ -99,5 +101,16 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         System.err.println(JSON.toJSON(param));
         String outPayNo = tradeServiceOrderService.pay(param);
         Assert.assertNotNull(outPayNo);
+    }
+    @Test(description = "支付回调")
+    public void processOrderNotify() throws ZZKServiceException {
+        TradeServiceOrderNotifyParam param = new TradeServiceOrderNotifyParam();
+        param.setOutPayNo("PAY06130237707264220352");
+        param.setPayAccount("支付宝");
+        param.setPayNo("支付流水号");
+        param.setPaySource("支付渠道");
+        System.err.println(JSON.toJSON(param));
+//        List<TradeServiceOrder> list= tradeServiceOrderService.processOrderNotify(param);
+//        Assert.assertNotEquals(list.size(), 0);
     }
 }

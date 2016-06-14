@@ -10,6 +10,8 @@
 package com.zizaike.trade.dao;  
 
 import com.zizaike.core.framework.springext.database.Master;
+import com.zizaike.entity.trade.OrderStatus;
+import com.zizaike.entity.trade.PayStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
 
 /**  
@@ -35,18 +37,17 @@ public interface TradeServiceOrderDao {
     void createTradeServiceOrder(TradeServiceOrder tradeServiceOrder);
     /**
      * 
-     * updateTradeServiceOrder:更新服务订单. <br/>  
+     * updateTradeServiceOrderPaySuccess:支付成功确认. <br/>  
      *  
      * @author snow.zhang  
-     * @param tradeServiceOrder
-     * @return  
+     * @param updateTradeServiceOrderPaySuccess  
      * @since JDK 1.7
      */
     @Master
-    void updateTradeServiceOrder(TradeServiceOrder tradeServiceOrder);
+    void updateTradeServiceOrderPaySuccess(String orderNo);
     /**
      * 
-     * queryByOrderNo:查看服务订单 能过订单号. <br/>  
+     * queryByOrderNo:查看服务订单通过订单号. <br/>  
      *  
      * @author snow.zhang  
      * @param OrderNo
@@ -55,6 +56,18 @@ public interface TradeServiceOrderDao {
      */
     @Master
     TradeServiceOrder queryByOrderNo(String orderNo);
+    /**
+     * 
+     * queryOrderNoAndOrderStatus:查询通过 订单号与订单状态 .<br/>  
+     *  
+     * @author snow.zhang  
+     * @param orderNo
+     * @param orderStatus
+     * @return  
+     * @since JDK 1.7
+     */
+    @Master
+    TradeServiceOrder queryOrderNoAndOrderStatus(String orderNo,OrderStatus orderStatus);
     
 }
   

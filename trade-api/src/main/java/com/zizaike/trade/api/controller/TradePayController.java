@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.framework.exception.ZZKServiceException;
-import com.zizaike.entity.trade.param.TradeServicePayCreateParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderNotifyParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderPayParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 
 
@@ -53,9 +54,16 @@ public class TradePayController extends BaseAjaxController{
      */
     @RequestMapping(value = "mergePay",method= RequestMethod.POST)
     @ResponseBody
-    public ResponseResult mergePay(@RequestBody TradeServicePayCreateParam param) throws ZZKServiceException {
+    public ResponseResult mergePay(@RequestBody TradeServiceOrderPayParam param) throws ZZKServiceException {
         ResponseResult responseResult = new ResponseResult();
         responseResult.setInfo(tradeServiceOrderService.pay(param));
+        return responseResult;
+    }
+    @RequestMapping(value = "callBack",method= RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult mergePay(@RequestBody TradeServiceOrderNotifyParam param) throws ZZKServiceException {
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setInfo(tradeServiceOrderService.processOrderNotify(param));
         return responseResult;
     }
 }

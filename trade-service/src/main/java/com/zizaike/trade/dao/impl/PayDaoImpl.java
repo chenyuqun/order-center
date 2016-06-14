@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.zizaike.core.framework.mybatis.impl.GenericMyIbatisDao;
 import com.zizaike.entity.trade.Pay;
+import com.zizaike.entity.trade.PayStatus;
 import com.zizaike.trade.dao.PayDao;
 
 /**
@@ -26,18 +27,31 @@ import com.zizaike.trade.dao.PayDao;
  * @see
  */
 @Repository
-public class PayDaoImpl extends GenericMyIbatisDao<Pay, Integer> implements
-        PayDao {
+public class PayDaoImpl extends GenericMyIbatisDao<Pay, Integer> implements PayDao {
     /**
      * 命名空间
      */
     private static final String NAMESPACE = "com.zizaike.trade.dao.PayMapper.";
+
     @Override
     public void creatPay(Pay pay) {
-          
-        this.getSqlSession().insert(NAMESPACE+"insertSelective", pay);
-        
+
+        this.getSqlSession().insert(NAMESPACE + "insertSelective", pay);
+
     }
 
+    @Override
+    public Pay queryByOutPayNoAndPayStatus(String outPayNo, PayStatus payStatus) {
+        Pay pay = new Pay();
+        pay.setOutPayNo(outPayNo);
+        pay.setPayStatus(payStatus);
+        pay = this.getSqlSession().selectOne(NAMESPACE + "queryByOutPayNoAndPayStatus", pay);
+        return pay;
+    }
+
+    @Override
+    public void update(Pay pay) {
+        this.getSqlSession().insert(NAMESPACE + "updateByoutPayNoSelective", pay);
+    }
 
 }

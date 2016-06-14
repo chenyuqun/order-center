@@ -104,4 +104,10 @@
       update_at = #{updateAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByOutPayNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pay_order
+    where out_pay_no = #{outPayNo,jdbcType=VARCHAR}
+  </select>
 </mapper>

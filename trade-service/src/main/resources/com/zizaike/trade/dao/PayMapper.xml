@@ -13,6 +13,20 @@
     <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
     <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
   </resultMap>
+  <!-- 级联角色列表一对多 -->
+  <resultMap id="CascadePayOrdersResultMap" type="com.zizaike.entity.trade.Pay" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="out_pay_no" property="outPayNo" jdbcType="VARCHAR" />
+    <result column="pay_no" property="payNo" jdbcType="VARCHAR" />
+    <result column="pay_account" property="payAccount" jdbcType="VARCHAR" />
+    <result column="pay_source" property="paySource" jdbcType="VARCHAR" />
+    <result column="pay_status" property="payStatus" typeHandler="com.zizaike.trade.dao.handler.PayStatusHandler"  />
+    <result column="callback_time" property="callbackTime" jdbcType="TIMESTAMP" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
+    <collection property="payOrders" column="out_pay_no" javaType="ArrayList" ofType="com.zizaike.entity.trade.PayOrder" select="com.zizaike.trade.dao.PayOrderMapper.selectByOutPayNo"/>
+  </resultMap>
   <sql id="Base_Column_List" >
     id, ip, out_pay_no, pay_no, pay_account, pay_source, pay_status, callback_time, create_at, 
     update_at
@@ -138,6 +152,31 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+   <update id="updateByoutPayNoSelective" parameterType="com.zizaike.entity.trade.Pay" >
+    update t_pay
+    <set >
+      <if test="payNo != null" >
+        pay_no = #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payAccount != null" >
+        pay_account = #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="paySource != null" >
+        pay_source = #{paySource,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,typeHandler=com.zizaike.trade.dao.handler.PayStatusHandler ,javaType=com.zizaike.entity.trade.PayStatus},
+      </if>
+      <if test="callbackTime != null" >
+        callback_time = #{callbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where out_pay_no = #{outPayNo,jdbcType=VARCHAR}
+  </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.zizaike.entity.trade.Pay" >
     update t_pay
     set ip = #{ip,jdbcType=VARCHAR},
@@ -151,4 +190,11 @@
       update_at = #{updateAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryByOutPayNoAndPayStatus" resultMap="CascadePayOrdersResultMap" parameterType="com.zizaike.entity.trade.Pay" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pay
+    where  out_pay_no = #{outPayNo,jdbcType=VARCHAR}
+        and pay_status = #{payStatus,typeHandler=com.zizaike.trade.dao.handler.PayStatusHandler ,javaType=com.zizaike.entity.trade.PayStatus}
+  </select>
 </mapper>

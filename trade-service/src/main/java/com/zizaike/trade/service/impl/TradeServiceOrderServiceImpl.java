@@ -24,9 +24,11 @@ import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
-import com.zizaike.entity.trade.param.TradeServicePayCreateParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderNotifyParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderPayParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
+import com.zizaike.trade.bizz.TradeServiceOrderNotifyBizz;
 import com.zizaike.trade.bizz.TradeServiceOrderPayBizz;
 import com.zizaike.trade.common.TradeGenUnit;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
@@ -46,6 +48,8 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     private TradeServiceOrderCreateBizz tradeServiceOrderCreateBizz;
     @Autowired
     private TradeServiceOrderPayBizz tradeServiceOrderPayBizz;
+    @Autowired
+    private TradeServiceOrderNotifyBizz tradeServiceOrderNotifyBizz;
     @Autowired
     private TradeServiceOrderDao tradeServiceOrderDao;
     @Autowired
@@ -85,7 +89,7 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     
     @Override
     public TradeServiceOrder queryByOrderNo(String orderNo) {
-
+        
         return tradeServiceOrderDao.queryByOrderNo(orderNo);
     }
 
@@ -106,10 +110,8 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     }
 
     @Override
-    public Map<String, Object> processOrderNotify(String orderNo, int payChannel, String payNo, String payAccount) {
-
-        // TODO Auto-generated method stub  
-        return null;
+    public List<TradeServiceOrder> processOrderNotify(TradeServiceOrderNotifyParam param) throws ZZKServiceException {
+        return tradeServiceOrderNotifyBizz.processOrderNotify(param);
     }
 
     @Override
@@ -134,7 +136,7 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
         return null;
     }
     @Override
-    public String pay(TradeServicePayCreateParam param) throws ZZKServiceException {
+    public String pay(TradeServiceOrderPayParam param) throws ZZKServiceException {
         return tradeServiceOrderPayBizz.pay(param);
     }
 

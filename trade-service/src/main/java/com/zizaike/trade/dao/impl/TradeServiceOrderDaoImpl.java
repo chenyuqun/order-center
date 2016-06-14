@@ -9,9 +9,13 @@
 
 package com.zizaike.trade.dao.impl;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Repository;
 
 import com.zizaike.core.framework.mybatis.impl.GenericMyIbatisDao;
+import com.zizaike.entity.trade.OrderStatus;
+import com.zizaike.entity.trade.PayStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
 
@@ -39,14 +43,34 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
     }
 
 
-    @Override
-    public void updateTradeServiceOrder(TradeServiceOrder tradeServiceOrder) {
-        this.getSqlSession().update(NAMESPACE + "updateByOrderNoSelective", tradeServiceOrder);
-    }
 
     @Override
     public TradeServiceOrder queryByOrderNo(String orderNo) {
         return this.getSqlSession().selectOne(NAMESPACE + "queryByOrderNo", orderNo);
     }
+
+
+    @Override
+    public void updateTradeServiceOrderPaySuccess(String orderNo) {
+        TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
+        tradeServiceOrder.setOrderNo(orderNo);
+         tradeServiceOrder.setOrderStatus(OrderStatus.PAYED);
+         tradeServiceOrder.setUpdateAt(new Date());
+        this.getSqlSession().update(NAMESPACE + "updateTradeServiceOrderPaySuccess", tradeServiceOrder);
+        
+    }
+
+
+
+
+
+    @Override
+    public TradeServiceOrder queryOrderNoAndOrderStatus(String orderNo, OrderStatus orderStatus) {
+        TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
+        tradeServiceOrder.setOrderNo(orderNo);
+        tradeServiceOrder.setOrderStatus(orderStatus);
+        return this.getSqlSession().selectOne(NAMESPACE + "queryOrderNoAndOrderStatus", tradeServiceOrder);
+    }
+    
 
 }

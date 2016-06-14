@@ -24,7 +24,7 @@ import com.zizaike.entity.trade.Pay;
 import com.zizaike.entity.trade.PayOrder;
 import com.zizaike.entity.trade.PayStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
-import com.zizaike.entity.trade.param.TradeServicePayCreateParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderPayParam;
 import com.zizaike.trade.bizz.TradeServiceOrderPayBizz;
 import com.zizaike.trade.common.TradeGenUnit;
 import com.zizaike.trade.dao.PayDao;
@@ -52,7 +52,7 @@ public class TradeServiceOrderPayBizzImpl implements TradeServiceOrderPayBizz {
     @Autowired
     TradeGenUnit tradeGenUnit;
 
-    public void validateTradeServiceOrderCreateParam(TradeServicePayCreateParam param)
+    public void validateTradeServiceOrderCreateParam(TradeServiceOrderPayParam param)
             throws IllegalParamterException {
         if (param == null) {
             throw new IllegalParamterException("param is not null");
@@ -67,7 +67,7 @@ public class TradeServiceOrderPayBizzImpl implements TradeServiceOrderPayBizz {
     }
 
     @Override
-    public String pay(TradeServicePayCreateParam param) throws ZZKServiceException {
+    public String pay(TradeServiceOrderPayParam param) throws ZZKServiceException {
         //参数校验
         validateTradeServiceOrderCreateParam(param);
         //合法性校验
