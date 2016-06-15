@@ -126,8 +126,12 @@ public class TradeServiceOrderServiceTest extends BaseTest {
 //        Assert.assertNotEquals(list.size(), 0);
     }
     @Test(description = "用户查询服务")
-    public void queryCustomerIdAndOrderStatus() throws ZZKServiceException {
-        List<TradeServiceOrder> list = tradeServiceOrderService.queryCustomerIdAndOrderStatus(1234, OrderStatus.ALL);
+    public void queryCustomer() throws ZZKServiceException {
+        TradeServiceOrderQueryParam param = new TradeServiceOrderQueryParam();
+        param.setCustomerId(1234);
+        param.setOrderStatus(OrderStatus.ALL);
+        param.setKeywords("哈哈");
+        List<TradeServiceOrder> list = tradeServiceOrderService.queryCustomer(param);
         Assert.assertNotNull(list);
     }
     @Test(description = "商家查询服务")

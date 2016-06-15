@@ -68,11 +68,8 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
     }
 
     @Override
-    public List<TradeServiceOrder> queryCustomerIdAndOrderStatus(Integer customerId, OrderStatus orderStatus) {
-        TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
-        tradeServiceOrder.setCustomerId(customerId);
-        tradeServiceOrder.setOrderStatus(orderStatus);
-        return this.getSqlSession().selectList(NAMESPACE + "queryCustomerIdAndOrderStatus", tradeServiceOrder);
+    public List<TradeServiceOrder> queryCustomer(TradeServiceOrderQueryParam param) {
+        return this.getSqlSession().selectList(NAMESPACE + "queryCustomer", param);
     }
 
     @Override

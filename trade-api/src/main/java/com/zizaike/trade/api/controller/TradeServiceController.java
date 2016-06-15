@@ -61,10 +61,13 @@ public class TradeServiceController extends BaseAjaxController {
     @RequestMapping(value = "/user/query", method = RequestMethod.GET)
     @ResponseBody
     public ResponseResult userQuery(@RequestParam("customerId") Integer customerId,
-            @RequestParam("orderStatus") OrderStatus orderStatus) throws ZZKServiceException {
-        LOG.info("user/query request param customerId :{},orderStatus {}", customerId, orderStatus);
+            @RequestParam("orderStatus") OrderStatus orderStatus,@RequestParam(value="keywords",required=false) String keywords) throws ZZKServiceException {
+        LOG.info("user/query request param customerId :{},orderStatus {},keywords:{}", customerId, orderStatus,keywords);
         ResponseResult responseResult = new ResponseResult();
-        responseResult.setInfo(tradeServiceOrderService.queryCustomerIdAndOrderStatus(customerId, orderStatus));
+        TradeServiceOrderQueryParam param = new TradeServiceOrderQueryParam();
+        param.setCustomerId(customerId);
+        param.setOrderStatus(orderStatus);
+        responseResult.setInfo(tradeServiceOrderService.queryCustomer(param));
         return responseResult;
     }
 

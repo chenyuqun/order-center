@@ -77,13 +77,11 @@ public interface TradeServiceOrderDao {
      * queryUserIdAndOrderStatus:用户查询订单. <br/>  
      *  
      * @author snow.zhang  
-     * @param userId
-     * @param orderStatus
      * @return  
      * @since JDK 1.7
      */
     @Slave
-    List<TradeServiceOrder> queryCustomerIdAndOrderStatus(Integer customerId,OrderStatus orderStatus);
+    List<TradeServiceOrder> queryCustomer(TradeServiceOrderQueryParam param);
     /**
      * 
      * queryBusiness:查询商业. <br/>  

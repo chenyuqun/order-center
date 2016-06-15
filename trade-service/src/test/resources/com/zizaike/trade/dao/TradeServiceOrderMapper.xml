@@ -669,13 +669,16 @@
     from t_trade_service_order
     where  order_no = #{orderNo,jdbcType=VARCHAR} and order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus}
   </select>
-  <select id="queryCustomerIdAndOrderStatus" resultMap="BaseResultMap" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >
+  <select id="queryCustomer" resultMap="BaseResultMap" parameterType="com.zizaike.entity.trade.param.TradeServiceOrderQueryParam" >
     select 
     <include refid="Base_Column_List" />
     from t_trade_service_order
     where  customer_id = #{customerId,jdbcType=INTEGER} 
      <if test="orderStatus != null " >
        and  order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus}
+      </if>
+     <if test="keywords != null and keywords !='' " >
+       and  CONCAT (order_no,unit_name) LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' )
       </if>
   </select>
   <select id="queryBusiness" resultMap="BaseResultMap" parameterType="com.zizaike.entity.trade.param.TradeServiceOrderQueryParam" >

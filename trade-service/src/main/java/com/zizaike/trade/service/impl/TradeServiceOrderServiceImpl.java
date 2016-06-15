@@ -147,18 +147,20 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
         return tradeServiceOrderPayBizz.pay(param);
     }
     @Override
-    public List<TradeServiceOrder> queryCustomerIdAndOrderStatus(Integer customerId, OrderStatus orderStatus) throws ZZKServiceException {
-          
-       if(customerId==null || customerId<=0){
+    public List<TradeServiceOrder> queryCustomer(TradeServiceOrderQueryParam param) throws ZZKServiceException {
+        if(param==null){
+            throw new IllegalParamterException("param is not null");
+        }
+       if(param.getCustomerId()==null || param.getCustomerId()<=0){
            throw new IllegalParamterException("customerId is not null or <=0");
        }
-       if(orderStatus==null){
+       if(param.getOrderStatus()==null){
            throw new IllegalParamterException("orderStatus is not null or <=0");
        }
-       if(orderStatus==orderStatus.ALL){
-           orderStatus =null;
+       if(param.getOrderStatus()==OrderStatus.ALL){
+           param.setOrderStatus(null);
        }
-        return tradeServiceOrderDao.queryCustomerIdAndOrderStatus(customerId, orderStatus);
+        return tradeServiceOrderDao.queryCustomer(param);
     }
     @Override
     public List<TradeServiceOrder> queryBusiness(TradeServiceOrderQueryParam param) throws ZZKServiceException {
