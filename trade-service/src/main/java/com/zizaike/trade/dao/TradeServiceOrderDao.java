@@ -11,10 +11,12 @@ package com.zizaike.trade.dao;
 
 import java.util.List;
 
+import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.core.framework.springext.database.Master;
 import com.zizaike.core.framework.springext.database.Slave;
 import com.zizaike.entity.trade.OrderStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
+import com.zizaike.entity.trade.param.TradeServiceOrderQueryParam;
 
 /**  
  * ClassName:TradeServiceOrderDao <br/>  
@@ -82,6 +84,18 @@ public interface TradeServiceOrderDao {
      */
     @Slave
     List<TradeServiceOrder> queryCustomerIdAndOrderStatus(Integer customerId,OrderStatus orderStatus);
+    /**
+     * 
+     * queryBusiness:查询商业. <br/>  
+     *  
+     * @author snow.zhang  
+     * @param map
+     * @return
+     * @throws ZZKServiceException  
+     * @since JDK 1.7
+     */
+    @Slave
+    List<TradeServiceOrder> queryBusiness(TradeServiceOrderQueryParam param)throws ZZKServiceException;
     
 }
   

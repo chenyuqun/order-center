@@ -1,6 +1,8 @@
 package com.zizaike.trade.service;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.testng.annotations.Test;
 import com.alibaba.fastjson.JSON;
 import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.entity.trade.BusinessOrderStatus;
 import com.zizaike.entity.trade.ChannelType;
 import com.zizaike.entity.trade.OrderStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
@@ -22,6 +25,7 @@ import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderNotifyParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderPayParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderQueryParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 import com.zizaike.trade.basetest.BaseTest;
 
@@ -123,7 +127,21 @@ public class TradeServiceOrderServiceTest extends BaseTest {
     }
     @Test(description = "用户查询服务")
     public void queryCustomerIdAndOrderStatus() throws ZZKServiceException {
-        List<TradeServiceOrder> list = tradeServiceOrderService.queryCustomerIdAndOrderStatus(1234, OrderStatus.CREATE);
+        List<TradeServiceOrder> list = tradeServiceOrderService.queryCustomerIdAndOrderStatus(1234, OrderStatus.ALL);
+        Assert.assertNotNull(list);
+    }
+    @Test(description = "商家查询服务")
+    public void queryBusiness() throws ZZKServiceException, ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        TradeServiceOrderQueryParam param = new TradeServiceOrderQueryParam();
+        String start = "2016-06-15";
+        String end = "2016-06-18";
+        param.setBusinessId(123);
+        param.setBusinessOrderStatus(BusinessOrderStatus.ALL);
+        param.setOrderStatus(OrderStatus.ALL);
+        param.setOrderTimeBegin(sdf.parse(start));
+        param.setOrderTimeEnd(sdf.parse(end));
+        List<TradeServiceOrder> list = tradeServiceOrderService.queryBusiness(param);
         Assert.assertNotNull(list);
     }
 }

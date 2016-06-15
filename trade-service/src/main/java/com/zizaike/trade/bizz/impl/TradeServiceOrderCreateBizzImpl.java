@@ -24,6 +24,7 @@ import com.zizaike.core.framework.exception.trade.ServiceNotExistException;
 import com.zizaike.entity.commodity.AdditionalService;
 import com.zizaike.entity.common.Country;
 import com.zizaike.entity.recommend.DestConfig;
+import com.zizaike.entity.trade.BusinessOrderStatus;
 import com.zizaike.entity.trade.OrderStatus;
 import com.zizaike.entity.trade.PayStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
@@ -160,7 +161,14 @@ public class TradeServiceOrderCreateBizzImpl implements TradeServiceOrderCreateB
         tradeServiceOrder.setTotalPrice(AmountUtil.toCustomerPrice(param.getAdditionalServiceParam().getServiceNumber()
                 * additionalService.getPrice(), businessDestConfig.getExchangeRate(),
                 customerDestConfig.getExchangeRate()));
+        /**
+         * 创建订单
+         */
         tradeServiceOrder.setOrderStatus(OrderStatus.CREATE);
+        /**
+         * 没有汇款
+         */
+        tradeServiceOrder.setBusinessOrderStatus(BusinessOrderStatus.NOT_REMITTANCE);
         tradeServiceOrder.setCreateAt(new Date());
         tradeServiceOrder.setUpdateAt(new Date());
         tradeServiceOrder.setRemark(param.getRemark());

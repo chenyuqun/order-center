@@ -15,10 +15,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.core.framework.mybatis.impl.GenericMyIbatisDao;
 import com.zizaike.entity.trade.OrderStatus;
-import com.zizaike.entity.trade.PayStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
+import com.zizaike.entity.trade.param.TradeServiceOrderQueryParam;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
 
 /**
@@ -44,27 +45,19 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
         this.getSqlSession().insert(NAMESPACE + "insertSelective", tradeServiceOrder);
     }
 
-
-
     @Override
     public TradeServiceOrder queryByOrderNo(String orderNo) {
         return this.getSqlSession().selectOne(NAMESPACE + "queryByOrderNo", orderNo);
     }
 
-
     @Override
     public void updateTradeServiceOrderPaySuccess(String orderNo) {
         TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
         tradeServiceOrder.setOrderNo(orderNo);
-         tradeServiceOrder.setOrderStatus(OrderStatus.PAYED);
-         tradeServiceOrder.setUpdateAt(new Date());
+        tradeServiceOrder.setOrderStatus(OrderStatus.PAYED);
+        tradeServiceOrder.setUpdateAt(new Date());
         this.getSqlSession().update(NAMESPACE + "updateTradeServiceOrderPaySuccess", tradeServiceOrder);
-        
     }
-
-
-
-
 
     @Override
     public TradeServiceOrder queryOrderNoAndOrderStatus(String orderNo, OrderStatus orderStatus) {
@@ -74,8 +67,6 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
         return this.getSqlSession().selectOne(NAMESPACE + "queryOrderNoAndOrderStatus", tradeServiceOrder);
     }
 
-
-
     @Override
     public List<TradeServiceOrder> queryCustomerIdAndOrderStatus(Integer customerId, OrderStatus orderStatus) {
         TradeServiceOrder tradeServiceOrder = new TradeServiceOrder();
@@ -83,6 +74,10 @@ public class TradeServiceOrderDaoImpl extends GenericMyIbatisDao<TradeServiceOrd
         tradeServiceOrder.setOrderStatus(orderStatus);
         return this.getSqlSession().selectList(NAMESPACE + "queryCustomerIdAndOrderStatus", tradeServiceOrder);
     }
-    
+
+    @Override
+    public List<TradeServiceOrder> queryBusiness(TradeServiceOrderQueryParam param) throws ZZKServiceException {
+        return this.getSqlSession().selectList(NAMESPACE + "queryBusiness", param);
+    }
 
 }

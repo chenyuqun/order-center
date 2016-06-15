@@ -36,6 +36,7 @@
     <result column="closed_reasons" property="closedReasons" jdbcType="INTEGER" />
     <result column="order_type" property="orderType" jdbcType="INTEGER" />
     <result column="order_status" property="orderStatus" typeHandler="com.zizaike.trade.dao.handler.OrderStatusHandler" />
+    <result column="business_order_status" property="businessOrderStatus" typeHandler="com.zizaike.trade.dao.handler.BusinessOrderStatusHandler" />
     <result column="order_remarks" property="orderRemarks" jdbcType="VARCHAR" />
     <result column="daochu_status" property="daochuStatus" jdbcType="BIT" />
     <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
@@ -46,7 +47,7 @@
     last_name, mobile, email, wechat, remark, unit_price, unit_number, total_price, use_time, 
     business_dest_id, customer_dest_id, RMB_rate_business, RMB_rate_customer,customer_currency_code, ip, customer_province, 
     commission_rate, commission_amount, discount_amount, refund_amount, closed_reasons, 
-    order_type, order_status, order_remarks, daochu_status, create_at, update_at
+    order_type, order_status,business_order_status, order_remarks, daochu_status, create_at, update_at
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -71,6 +72,7 @@
       ip, customer_province, commission_rate, 
       commission_amount, discount_amount, refund_amount, 
       closed_reasons, order_type, order_status, 
+      business_order_status,
       order_remarks, daochu_status, create_at, 
       update_at)
     values (#{id,jdbcType=INTEGER}, #{masterOrderNo,jdbcType=VARCHAR}, 
@@ -92,6 +94,7 @@
       #{commissionAmount,jdbcType=INTEGER}, #{discountAmount,jdbcType=INTEGER}, #{refundAmount,jdbcType=INTEGER}, 
       #{closedReasons,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER},
        #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
+       #{businessOrderStatus,typeHandler=com.zizaike.trade.dao.handler.BusinessOrderStatusHandler,javaType=com.zizaike.entity.trade.BusinessOrderStatus},
       #{orderRemarks,jdbcType=VARCHAR}, #{daochuStatus,jdbcType=BIT}, #{createAt,jdbcType=TIMESTAMP}, 
       #{updateAt,jdbcType=TIMESTAMP})
   </insert>
@@ -199,6 +202,9 @@
       </if>
       <if test="orderStatus != null" >
         order_status,
+      </if>
+      <if test="businessOrderStatus != null" >
+        business_order_status,
       </if>
       <if test="orderRemarks != null" >
         order_remarks,
@@ -316,6 +322,9 @@
       <if test="orderStatus != null" >
          #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
       </if>
+      <if test="businessOrderStatus != null" >
+		#{businessOrderStatus,typeHandler=com.zizaike.trade.dao.handler.BusinessOrderStatusHandler,javaType=com.zizaike.entity.trade.BusinessOrderStatus},
+	  </if>
       <if test="orderRemarks != null" >
         #{orderRemarks,jdbcType=VARCHAR},
       </if>
@@ -432,6 +441,9 @@
       <if test="orderStatus != null" >
         order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
       </if>
+      <if test="businessOrderStatus != null" >
+        business_order_status = #{businessOrderStatus,typeHandler=com.zizaike.trade.dao.handler.BusinessOrderStatusHandler,javaType=com.zizaike.entity.trade.BusinessOrderStatus},
+      </if>
       <if test="orderRemarks != null" >
         order_remarks = #{orderRemarks,jdbcType=VARCHAR},
       </if>
@@ -482,6 +494,7 @@
       closed_reasons = #{closedReasons,jdbcType=INTEGER},
       order_type = #{orderType,jdbcType=INTEGER},
       order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
+      business_order_status =  #{businessOrderStatus,typeHandler=com.zizaike.trade.dao.handler.BusinessOrderStatusHandler,javaType=com.zizaike.entity.trade.BusinessOrderStatus},
       order_remarks = #{orderRemarks,jdbcType=VARCHAR},
       daochu_status = #{daochuStatus,jdbcType=BIT},
       create_at = #{createAt,jdbcType=TIMESTAMP},
@@ -584,6 +597,9 @@
       <if test="orderStatus != null" >
         order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
       </if>
+      <if test="businessOrderStatus != null" >
+      	business_order_status =  #{businessOrderStatus,typeHandler=com.zizaike.trade.dao.handler.BusinessOrderStatusHandler,javaType=com.zizaike.entity.trade.BusinessOrderStatus},
+      </if>
       <if test="orderRemarks != null" >
         order_remarks = #{orderRemarks,jdbcType=VARCHAR},
       </if>
@@ -611,7 +627,9 @@
       ip,
        customer_province, commission_rate, 
       commission_amount, discount_amount, refund_amount, 
-      closed_reasons, order_type, order_status, 
+      closed_reasons, order_type,
+       order_status, 
+       business_order_status, 
       order_remarks, daochu_status, create_at, 
       update_at)
     values 
@@ -634,6 +652,7 @@
       #{item.commissionAmount,jdbcType=INTEGER}, #{item.discountAmount,jdbcType=INTEGER}, #{item.refundAmount,jdbcType=INTEGER}, 
       #{item.closedReasons,jdbcType=INTEGER}, #{item.orderType,jdbcType=INTEGER}, 
       #{item.orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus},
+      #{item.businessOrderStatus,typeHandler=com.zizaike.trade.dao.handler.BusinessOrderStatusHandler,javaType=com.zizaike.entity.trade.BusinessOrderStatus},
       #{item.orderRemarks,jdbcType=VARCHAR}, #{item.daochuStatus,jdbcType=BIT}, #{item.createAt,jdbcType=TIMESTAMP}, 
       #{item.updateAt,jdbcType=TIMESTAMP})
        </foreach>  
@@ -655,9 +674,38 @@
     <include refid="Base_Column_List" />
     from t_trade_service_order
     where  customer_id = #{customerId,jdbcType=INTEGER} 
-     <if test="orderStatus != null" >
+     <if test="orderStatus != null " >
        and  order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus}
       </if>
+  </select>
+  <select id="queryBusiness" resultMap="BaseResultMap" parameterType="com.zizaike.entity.trade.param.TradeServiceOrderQueryParam" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_trade_service_order
+    where  
+    	business_id = #{businessId,jdbcType=INTEGER} 
+     <if test="businessOrderStatus != null" >
+       and  business_order_status =  #{businessOrderStatus,typeHandler=com.zizaike.trade.dao.handler.BusinessOrderStatusHandler,javaType=com.zizaike.entity.trade.BusinessOrderStatus}
+      </if>
+      <if test="orderStatus != null " >
+       and  order_status =  #{orderStatus,typeHandler=com.zizaike.trade.dao.handler.OrderStatusHandler,javaType=com.zizaike.entity.trade.OrderStatus}
+      </if>
+     <if test="orderTimeBegin != null and orderTimeEnd != null" >
+       and  (create_at between   #{orderTimeBegin, jdbcType=TIMESTAMP} and #{orderTimeEnd, jdbcType=TIMESTAMP})
+     </if>
+     <if test="useTimeBegin != null and useTimeEnd != null" >
+       and  (use_time between  #{useTimeBegin, jdbcType=TIMESTAMP} and #{useTimeEnd, jdbcType=TIMESTAMP})
+     </if>
+     <if test="orderNo != null and orderNo !=''" >
+       and  order_no =  #{orderNo,jdbcType=VARCHAR}
+      </if>
+     <if test="guestName != null and guestName!='' " >
+       and  guest_name =  #{guestName,jdbcType=VARCHAR}
+      </if>
+     <if test="mobile != null and mobile!=''" >
+       and  mobile =  #{mobile,jdbcType=VARCHAR}
+      </if>
+    order by  create_at  desc 
   </select>
   
    <update id="updateTradeServiceOrderPaySuccess" parameterType="com.zizaike.entity.trade.TradeServiceOrder" >

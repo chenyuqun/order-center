@@ -21,6 +21,7 @@ import com.zizaike.core.common.page.Page;
 import com.zizaike.core.common.page.PageList;
 import com.zizaike.core.framework.exception.IllegalParamterException;
 import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.entity.trade.BusinessOrderStatus;
 import com.zizaike.entity.trade.OrderStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
@@ -28,6 +29,7 @@ import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderCreateParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderNotifyParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderPayParam;
+import com.zizaike.entity.trade.param.TradeServiceOrderQueryParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
 import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
 import com.zizaike.trade.bizz.TradeServiceOrderNotifyBizz;
@@ -153,10 +155,32 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
        if(orderStatus==null){
            throw new IllegalParamterException("orderStatus is not null or <=0");
        }
-       if(orderStatus==OrderStatus.ALL){
-           orderStatus= null;
+       if(orderStatus==orderStatus.ALL){
+           orderStatus =null;
        }
         return tradeServiceOrderDao.queryCustomerIdAndOrderStatus(customerId, orderStatus);
+    }
+    @Override
+    public List<TradeServiceOrder> queryBusiness(TradeServiceOrderQueryParam param) throws ZZKServiceException {
+        if(param==null){
+            throw new IllegalParamterException("param is not null");
+        }
+        if(param.getBusinessId()==null || param.getBusinessId()<=0){
+            throw new IllegalParamterException("param is not null or <=0");
+        }
+        if(param.getBusinessOrderStatus()==null){
+            throw new IllegalParamterException("businessOrderStatus is not null");
+        }
+        if(param.getBusinessOrderStatus()==BusinessOrderStatus.ALL){
+            param.setBusinessOrderStatus(null);
+        }
+        if(param.getOrderStatus()==null){
+            throw new IllegalParamterException("orderStatus is not null");
+        }
+        if(param.getOrderStatus()==OrderStatus.ALL){
+            param.setOrderStatus(null);
+        }
+        return tradeServiceOrderDao.queryBusiness(param);
     }
 
 
