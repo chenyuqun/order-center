@@ -95,8 +95,10 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     }
     
     @Override
-    public TradeServiceOrder queryByOrderNo(String orderNo) {
-        
+    public TradeServiceOrder queryByOrderNo(String orderNo) throws ZZKServiceException {
+        if(orderNo==null){
+            throw new IllegalParamterException("orderNo is not null");
+        }
         return tradeServiceOrderDao.queryByOrderNo(orderNo);
     }
 
