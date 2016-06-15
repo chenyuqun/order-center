@@ -23,6 +23,9 @@ import com.zizaike.core.framework.exception.IllegalParamterException;
 import com.zizaike.core.framework.exception.ZZKServiceException;
 import com.zizaike.entity.trade.BusinessOrderStatus;
 import com.zizaike.entity.trade.OrderStatus;
+import com.zizaike.entity.trade.Pay;
+import com.zizaike.entity.trade.PayOrder;
+import com.zizaike.entity.trade.PayStatus;
 import com.zizaike.entity.trade.TradeServiceOrder;
 import com.zizaike.entity.trade.param.AdditionalServiceParam;
 import com.zizaike.entity.trade.param.TradeServiceBatchOrderCreateParam;
@@ -35,6 +38,7 @@ import com.zizaike.trade.bizz.TradeServiceOrderCreateBizz;
 import com.zizaike.trade.bizz.TradeServiceOrderNotifyBizz;
 import com.zizaike.trade.bizz.TradeServiceOrderPayBizz;
 import com.zizaike.trade.common.TradeGenUnit;
+import com.zizaike.trade.dao.PayDao;
 import com.zizaike.trade.dao.TradeServiceOrderDao;
 
 /**  
@@ -58,6 +62,8 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
     private TradeServiceOrderDao tradeServiceOrderDao;
     @Autowired
     private TradeGenUnit orderNoGenUnit;
+    @Autowired
+    PayDao payDao;
     @Override
     public ResponseResult createTradeServiceOrder(TradeServiceOrderCreateParam param) {
         ResponseResult responseResult = new ResponseResult();
@@ -185,6 +191,22 @@ public class TradeServiceOrderServiceImpl implements TradeServiceOrderService {
             param.setOrderStatus(null);
         }
         return tradeServiceOrderDao.queryBusiness(param);
+    }
+    @Override
+    public List<String> queryPayTradeOrders(String outPayNo, PayStatus payStatus) throws ZZKServiceException {
+        if(outPayNo==null){
+            throw new IllegalParamterException("outPayNo is not null");
+        }  
+        if(payStatus==null){
+            throw new IllegalParamterException("payStatus is not null");
+        }  
+        Pay pay= payDao.queryByOutPayNoAndPayStatus(outPayNo, payStatus);
+        List<String> list = new ArrayList<>();
+        List<PayOrder> payOrders = pay.getPayOrders();
+        for (PayOrder payOrder : payOrders) {
+            list.add(payOrder.getOrderNo());
+        }
+        return list;
     }
 
 

@@ -17,10 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zizaike.core.bean.ResponseResult;
 import com.zizaike.core.framework.exception.ZZKServiceException;
+import com.zizaike.entity.trade.PayStatus;
 import com.zizaike.entity.trade.param.TradeServiceOrderNotifyParam;
 import com.zizaike.entity.trade.param.TradeServiceOrderPayParam;
 import com.zizaike.is.trade.TradeServiceOrderService;
@@ -64,6 +66,13 @@ public class TradePayController extends BaseAjaxController{
     public ResponseResult mergePay(@RequestBody TradeServiceOrderNotifyParam param) throws ZZKServiceException {
         ResponseResult responseResult = new ResponseResult();
         responseResult.setInfo(tradeServiceOrderService.processOrderNotify(param));
+        return responseResult;
+    }
+    @RequestMapping(value = "query",method= RequestMethod.GET)
+    @ResponseBody
+    public ResponseResult query(@RequestParam("outPayNo") String outPayNo,@RequestParam("payStatus") PayStatus payStatus) throws ZZKServiceException {
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setInfo(tradeServiceOrderService.queryPayTradeOrders(outPayNo, payStatus));
         return responseResult;
     }
 }
