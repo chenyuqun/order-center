@@ -70,6 +70,14 @@ public class TradeServiceController extends BaseAjaxController {
         responseResult.setInfo(tradeServiceOrderService.queryCustomer(param));
         return responseResult;
     }
+    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseResult queryByOrderNo(@RequestParam(value="orderNo",required=true) String orderNo) throws ZZKServiceException {
+        LOG.info("query request param orderNo :{}", orderNo);
+        ResponseResult responseResult = new ResponseResult();
+        responseResult.setInfo(tradeServiceOrderService.queryByOrderNo(orderNo));
+        return responseResult;
+    }
 
     @RequestMapping(value = "/business/query", method = RequestMethod.GET)
     @ResponseBody

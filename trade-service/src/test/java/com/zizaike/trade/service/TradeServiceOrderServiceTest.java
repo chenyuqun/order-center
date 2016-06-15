@@ -148,4 +148,9 @@ public class TradeServiceOrderServiceTest extends BaseTest {
         List<TradeServiceOrder> list = tradeServiceOrderService.queryBusiness(param);
         Assert.assertNotNull(list);
     }
+    @Test(description = "通过订单号查询")
+    public void queryOrderNO() throws ZZKServiceException, ParseException {
+        TradeServiceOrder tradeServiceOrder= tradeServiceOrderService.queryByOrderNo("S061501685760170228");
+        Assert.assertNotNull(tradeServiceOrder);
+    }
 }
